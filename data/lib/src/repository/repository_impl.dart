@@ -15,6 +15,9 @@ class RepositoryImpl implements Repository {
     this._languageCodeDataMapper,
     this._genderDataMapper,
     this._localUserDataMapper,
+    this._apiTableDataMapper,
+    this._apiCategoriesDataMapper,
+    this._apiItemCategoriesDataMapper
   );
 
   final AppApiService _appApiService;
@@ -25,6 +28,9 @@ class RepositoryImpl implements Repository {
   final LanguageCodeDataMapper _languageCodeDataMapper;
   final GenderDataMapper _genderDataMapper;
   final LocalUserDataMapper _localUserDataMapper;
+  final ApiTableDataMapper _apiTableDataMapper;
+  final ApiCategoriesDataMapper _apiCategoriesDataMapper;
+  final ApiItemCategoriesDataMapper _apiItemCategoriesDataMapper;
 
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
@@ -126,13 +132,9 @@ class RepositoryImpl implements Repository {
   Future<void> clearCurrentUserData() => _appPreferences.clearCurrentUserData();
 
   @override
-  Future<PagedList<User>> getUsers({
-    required int page,
-    required int? limit,
-  }) async {
-    final response = await _appApiService.getUsers(page: page, limit: limit);
-
-    return PagedList(data: _userDataMapper.mapToListEntity(response?.results));
+  Future<MListTable> getTables() async {
+    final response = await _appApiService.getTables();
+    return _apiTableDataMapper.mapToEntityList(response);
   }
 
   @override
@@ -190,4 +192,16 @@ class RepositoryImpl implements Repository {
   @override
   Future<bool> saveUserPreference(User user) =>
       _appPreferences.saveCurrentUser(_preferenceUserDataMapper.mapToData(user));
+
+  @override
+  Future<MListCategories> getCategory() async {
+    final response = await _appApiService.getCategory();
+    return _apiCategoriesDataMapper.mapToEntityList(response?.data);
+  }
+
+  @override
+  Future<MItemCategoriesResponseList> getItemMenu(String categories) async {
+    final response = await _appApiService.getItemMenu(categories);
+    return _apiItemCategoriesDataMapper.mapToEntityList(response?.data);
+  }
 }

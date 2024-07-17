@@ -35,4 +35,85 @@ class AppTextStyles {
         fontWeight: FontWeight.w400,
         color: AppColors.current.secondaryTextColor,
       ));
+
+  static TextStyle s14w600Primary({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d14.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w600,
+        color: AppColors.current.primaryTextColor,
+      ));
+
+  static TextStyle s16w400Primary({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d16.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w400,
+        color: AppColors.current.primaryTextColor,
+      ));
+
+  static TextStyle s16w600Primary({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d16.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w600,
+        color: AppColors.current.primaryTextColor,
+      ));
+
+  static TextStyle s12w400Description({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d12.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w400,
+        color: AppColors.current.primaryTextColor,
+      ));
+
+  static TextStyle s14w400Description({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d14.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w400,
+        color: AppColors.current.primaryTextColor,
+      ));
+
+  static TextStyle s50w700Title2({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d50.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w700,
+        color: AppColors.current.primaryTextColor,
+        fontStyle: FontStyle.italic,
+      ));
+
+  static TextStyle s20w700Title2({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d20.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w700,
+        color: AppColors.current.primaryTextColor,
+      ));
+
+  static TextStyle s18w700Title2({
+    double? tablet,
+    double? ultraTablet,
+  }) =>
+      _baseTextStyle.merge(TextStyle(
+        fontSize: Dimens.d18.responsive(tablet: tablet, ultraTablet: ultraTablet),
+        fontWeight: FontWeight.w700,
+        color: AppColors.current.neutral1,
+      ));
 }

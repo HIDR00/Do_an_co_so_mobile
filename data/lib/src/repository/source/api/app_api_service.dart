@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../../../data.dart';
 
@@ -7,11 +8,9 @@ class AppApiService {
   AppApiService(
     this._noneAuthAppServerApiClient,
     this._authAppServerApiClient,
-    this._randomUserApiClient,
   );
   final NoneAuthAppServerApiClient _noneAuthAppServerApiClient;
   final AuthAppServerApiClient _authAppServerApiClient;
-  final RandomUserApiClient _randomUserApiClient;
 
   Future<DataResponse<ApiAuthResponseData>?> login({
     required String email,
@@ -91,19 +90,37 @@ class AppApiService {
     );
   }
 
-  Future<ResultsListResponse<ApiUserData>?> getUsers({
-    required int page,
-    required int? limit,
-  }) {
-    return _randomUserApiClient.request(
+  Future<ApiListTableData?> getTables() async {
+    return _noneAuthAppServerApiClient.request(
       method: RestMethod.get,
-      path: '',
-      queryParameters: {
-        'page': page,
-        'results': limit,
-      },
-      successResponseMapperType: SuccessResponseMapperType.resultsJsonArray,
-      decoder: (json) => ApiUserData.fromJson(json as Map<String, dynamic>),
+      path: '${UrlConstants.appApiBaseUrl}/v1/tables/all',
+      successResponseMapperType: SuccessResponseMapperType.jsonObject,
+      decoder: (data) => ApiListTableData.fromJson(data as Map<String, dynamic>),
     );
   }
+
+  Future<ApiCategoriesResponse?> getCategory() async {
+    return _noneAuthAppServerApiClient.request(
+      method: RestMethod.get,
+      path: '${UrlConstants.appApiBaseUrl}/v1/categories/all',
+      successResponseMapperType: SuccessResponseMapperType.jsonObject,
+      decoder: (data) => ApiCategoriesResponse.fromJson(data as Map<String, dynamic>),
+    );
+  }
+
+  Future<ApiListItemCategoriesData?> getItemMenu(String categories) async {
+    return _noneAuthAppServerApiClient.request(
+      method: RestMethod.get,
+      path: '${UrlConstants.appApiBaseUrl}/v1/menu/$categories',
+      successResponseMapperType: SuccessResponseMapperType.jsonObject,
+      decoder: (data) => ApiListItemCategoriesData.fromJson(data as Map<String, dynamic>),
+    );
+  }
+
+
+
+
+  
+
+  
 }

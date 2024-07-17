@@ -1,4 +1,4 @@
-package jp.flutter.app
+package com.hidr0.do_an_co_so
 
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity

@@ -32,11 +32,12 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -52,7 +53,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "jp.flutter.app"
+        applicationId "com.hidr0.do_an_co_so"
         minSdkVersion 26
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
@@ -88,7 +89,7 @@ android {
             dimension "flavor-type"
             versionCode = 41
             versionName = "1.0.1"
-            applicationId "jp.flutter.app.dev"
+            applicationId "com.hidr0.do_an_co_so"
             manifestPlaceholders["host"] = "dev.chatwork.com"
             manifestPlaceholders["applicationName"] = "Develop"
             // manifestPlaceholders["apiKey"] = dartEnvironmentVariables.API_KEY
@@ -101,7 +102,7 @@ android {
             dimension "flavor-type"
             versionCode = 11
             versionName = "1.0.1"
-            applicationId "jp.flutter.app.qa"
+            applicationId "com.hidr0.do_an_co_so"
             manifestPlaceholders["host"] = "dev.chatwork.com"
             manifestPlaceholders["applicationName"] = "Qa"
             // manifestPlaceholders["apiKey"] = dartEnvironmentVariables.API_KEY
@@ -114,7 +115,7 @@ android {
             dimension "flavor-type"
             versionCode = 12
             versionName = "1.0.3"
-            applicationId "jp.flutter.app.stg"
+            applicationId "com.hidr0.do_an_co_so"
             manifestPlaceholders["host"] = "stg.facebook.com"
             manifestPlaceholders["applicationName"] = "Staging"
             // manifestPlaceholders["apiKey"] = dartEnvironmentVariables.API_KEY
@@ -135,7 +136,7 @@ android {
             dimension "flavor-type"
             versionCode = 1
             versionName = "1.0.0"
-            applicationId "jp.flutter.app"
+            applicationId "com.hidr0.do_an_co_so"
             manifestPlaceholders["host"] = "chatwork.com"
             manifestPlaceholders["applicationName"] = "Production"
             // manifestPlaceholders["apiKey"] = dartEnvironmentVariables.API_KEY
@@ -160,4 +161,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation platform('com.google.firebase:firebase-bom:33.1.2')
+    implementation 'com.google.firebase:firebase-analytics'
 }

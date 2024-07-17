@@ -44,10 +44,10 @@ abstract class Repository {
 
   Future<bool> saveIsFirstLaunchApp(bool isFirstLaunchApp);
 
-  Future<PagedList<User>> getUsers({
-    required int page,
-    required int? limit,
-  });
+  // Future<PagedList<User>> getUsers({
+  //   required int page,
+  //   required int? limit,
+  // });
 
   Future<bool> saveIsDarkMode(bool isDarkMode);
 
@@ -70,4 +70,10 @@ abstract class Repository {
   bool deleteImageUrl(int id);
 
   int deleteAllUsersAndImageUrls();
+
+  Future<MListTable> getTables();
+
+  Future<MListCategories> getCategory();
+
+  Future<MItemCategoriesResponseList> getItemMenu(String categories);
 }

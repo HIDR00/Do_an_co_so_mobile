@@ -50,6 +50,7 @@ export 'src/utils/collection_utils.dart';
 export 'src/utils/date_time_utils.dart';
 export 'src/utils/device_utils.dart';
 export 'src/utils/file_utils.dart';
+export 'src/utils/firebase_utils.dart';
 export 'src/utils/intent_utils.dart';
 export 'src/utils/log_utils.dart';
 export 'src/utils/num_utils.dart';

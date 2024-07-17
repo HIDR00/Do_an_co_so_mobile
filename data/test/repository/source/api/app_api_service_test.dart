@@ -7,19 +7,16 @@ class MockNoneAuthAppServerApiClient extends Mock implements NoneAuthAppServerAp
 
 class MockAuthAppServerApiClient extends Mock implements AuthAppServerApiClient {}
 
-class MockRandomUserApiClient extends Mock implements RandomUserApiClient {}
 
 void main() {
   late AppApiService appApiService;
   final _noneAuthAppServerApiClient = MockNoneAuthAppServerApiClient();
   final _authAppServerApiClient = MockAuthAppServerApiClient();
-  final _randomUserApiClient = MockRandomUserApiClient();
 
   setUp(() {
     appApiService = AppApiService(
       _noneAuthAppServerApiClient,
       _authAppServerApiClient,
-      _randomUserApiClient,
     );
   });
 
