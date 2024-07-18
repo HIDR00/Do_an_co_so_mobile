@@ -12,7 +12,7 @@ class ApiItemCategoriesDataMapper extends BaseDataMapper<ApiItemCategoriesData, 
       name: data?.name ?? '',
       price: data?.price ?? -1,
       image: data?.image ?? '',
-      beverages: data?.beverages ?? ''
+      categoryName: data?.categoryName ?? ''
     );
   }
 

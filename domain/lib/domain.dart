@@ -11,6 +11,7 @@ export 'src/entity/image_url.dart';
 export 'src/entity/m_list_categories.dart';
 export 'src/entity/m_list_item_categories.dart';
 export 'src/entity/m_list_table.dart';
+export 'src/entity/m_order_item.dart';
 export 'src/entity/token.dart';
 export 'src/entity/user.dart';
 export 'src/navigation/app_navigator.dart';

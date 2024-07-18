@@ -17,7 +17,8 @@ class RepositoryImpl implements Repository {
     this._localUserDataMapper,
     this._apiTableDataMapper,
     this._apiCategoriesDataMapper,
-    this._apiItemCategoriesDataMapper
+    this._apiItemCategoriesDataMapper,
+    this._apiOderItemDataMapper
   );
 
   final AppApiService _appApiService;
@@ -31,7 +32,7 @@ class RepositoryImpl implements Repository {
   final ApiTableDataMapper _apiTableDataMapper;
   final ApiCategoriesDataMapper _apiCategoriesDataMapper;
   final ApiItemCategoriesDataMapper _apiItemCategoriesDataMapper;
-
+  final ApiOderItemDataMapper _apiOderItemDataMapper;
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -203,5 +204,10 @@ class RepositoryImpl implements Repository {
   Future<MItemCategoriesResponseList> getItemMenu(String categories) async {
     final response = await _appApiService.getItemMenu(categories);
     return _apiItemCategoriesDataMapper.mapToEntityList(response?.data);
+  }
+
+  @override
+  Future<void> postListOrder(List<MOrderItem> lOrderItem,int tableId) async {
+    await _appApiService.postListOrder(List<ApiOderItemData>.from(lOrderItem.map((data) => _apiOderItemDataMapper.mapToData(data)).toList()),tableId);
   }
 }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 import 'menu.dart';
@@ -19,7 +18,10 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
       _onTabViewInitiated,
       transformer: log(),
     );
-
+    on<TabViewAddOrder>(
+      _onTabViewAddOrder,
+      transformer: log(),
+    );
   }
   final Repository _repository;
 
@@ -27,7 +29,6 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
     return runBlocCatching(
       action: () async {
         final _result = await _repository.getCategory();
-        await FirebaseMessagingUtil.getToken();
         emit(state.copyWith(isShimmerLoading: true,lCategories: _result.lMCategories));
     },
     doOnSubscribe: () async {
@@ -50,6 +51,21 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
     },
     doOnEventCompleted: () async {
       
+    },
+    );
+  }
+
+  FutureOr<void> _onTabViewAddOrder(TabViewAddOrder event, Emitter<MenuState> emit) async {
+    return runBlocCatching(
+      action: () async {
+        final _result = List<MItemCategories>.from(state.lItemCategoriesOder);
+        _result.add(event.itemCategoriesOder);
+        emit(state.copyWith(lItemCategoriesOder: _result));
+    },
+    doOnSubscribe: () async {
+      
+    },
+    doOnEventCompleted: () async {
     },
     );
   }

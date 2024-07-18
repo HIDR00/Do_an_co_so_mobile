@@ -29,7 +29,7 @@ class ApiItemCategoriesData with _$ApiItemCategoriesData {
     @JsonKey(name: 'itemName') String? name,
     @JsonKey(name: 'price') double? price,
     @JsonKey(name: 'image') String? image,
-    @JsonKey(name: 'categoryName') String? beverages,
+    @JsonKey(name: 'category') String? categoryName,
   }) = _ApiItemCategoriesData;
 
   factory ApiItemCategoriesData.fromJson(Map<String, dynamic> json) => _$ApiItemCategoriesDataFromJson(json);

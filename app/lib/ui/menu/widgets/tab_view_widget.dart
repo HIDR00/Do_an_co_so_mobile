@@ -6,22 +6,23 @@ import '../../../app.dart';
 import '../bloc/menu.dart';
 
 class TabViewWidget extends StatefulWidget {
-  const TabViewWidget({required this.categories, super.key});
+  const TabViewWidget({required this.categories, required this.bloc, super.key});
   final String categories;
+  final MenuBloc bloc;
 
   @override
   State<TabViewWidget> createState() => _TabViewWidgetState();
 }
 
-class _TabViewWidgetState extends BasePageState<TabViewWidget, MenuBloc> {
+class _TabViewWidgetState extends State<TabViewWidget> {
   @override
   void initState() {
     super.initState();
-    bloc.add(TabViewInitiated(widget.categories));
+    widget.bloc.add(TabViewInitiated(widget.categories));
   }
 
   @override
-  Widget buildPage(BuildContext context) {
+  Widget build(BuildContext context) {
     return BlocBuilder<MenuBloc, MenuState>(
       builder: (context, state) {
         return Container(
@@ -50,8 +51,11 @@ class _TabViewWidgetState extends BasePageState<TabViewWidget, MenuBloc> {
                         children: [
                           ClipRRect(
                               borderRadius: BorderRadius.circular(Dimens.d10),
-                              child:
-                                  CachedNetworkImage(imageUrl: state.lItemCategories[index].image,height: Dimens.d100,fit: BoxFit.cover,)),
+                              child: CachedNetworkImage(
+                                imageUrl: state.lItemCategories[index].image,
+                                height: Dimens.d100,
+                                fit: BoxFit.cover,
+                              )),
                           const SizedBox(height: Dimens.d10),
                           Text(
                             state.lItemCategories[index].name,
@@ -68,16 +72,19 @@ class _TabViewWidgetState extends BasePageState<TabViewWidget, MenuBloc> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  
+                                  widget.bloc.add(TabViewAddOrder(state.lItemCategories[index]));
                                 },
                                 child: Container(
                                   height: Dimens.d25,
                                   width: Dimens.d25,
                                   decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(Dimens.d5)
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(Dimens.d5)),
+                                  child: const Icon(
+                                    Icons.add_shopping_cart_outlined,
+                                    color: Colors.white,
+                                    size: Dimens.d20,
                                   ),
-                                  child: const Icon(Icons.add_shopping_cart_outlined,color: Colors.white,size: Dimens.d20,),
                                 ),
                               )
                             ],

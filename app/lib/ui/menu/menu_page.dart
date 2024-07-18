@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,6 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     bloc.add(const MenuPageInitiated());
   }
@@ -38,18 +38,24 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
               actions: [
                 Padding(
                   padding: const EdgeInsets.only(right: Dimens.d20, top: Dimens.d15),
-                  child: Stack(children: [
-                    Assets.images.bag.svg(),
-                    Container(
-                      margin: const EdgeInsets.only(left: Dimens.d15, top: Dimens.d1),
-                      height: Dimens.d18,
-                      width: Dimens.d18,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
+                  child: GestureDetector(
+                    onTap: () {
+                        navigator.push(AppRouteInfo.order(state.lItemCategoriesOder));
+                      },
+                    child: Stack(children: [
+                      Assets.images.bag.svg(),
+                      Container(
+                        margin: const EdgeInsets.only(left: Dimens.d15, top: Dimens.d1),
+                        height: Dimens.d18,
+                        width: Dimens.d18,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: Center(child: Text(state.lItemCategoriesOder.length.toString(),style: AppTextStyles.s12w400Description().copyWith(color: AppColors.primaryBG)))
                       ),
-                    ),
-                  ]),
+                    ]),
+                  ),
                 )
               ],
               leadingIconColor: AppColors.genericBlack,
@@ -70,7 +76,7 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
                   child: TabBarView(
                     children: List<Widget>.generate(
                       state.lCategories.length,
-                      (index) => TabViewWidget(categories: state.lCategories[index].name),
+                      (index) => TabViewWidget(categories: state.lCategories[index].name,bloc: bloc),
                     ),
                   ),
                 )

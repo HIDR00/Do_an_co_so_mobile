@@ -76,4 +76,6 @@ abstract class Repository {
   Future<MListCategories> getCategory();
 
   Future<MItemCategoriesResponseList> getItemMenu(String categories);
+
+  Future<void> postListOrder(List<MOrderItem> lOrderItem,int tableId);
 }

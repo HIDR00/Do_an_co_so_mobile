@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:injectable/injectable.dart';
 import 'package:shared/shared.dart';
 
@@ -117,6 +119,13 @@ class AppApiService {
     );
   }
 
+  Future<void> postListOrder(List<ApiOderItemData> lOrderItem,int tableId) async {
+    await _noneAuthAppServerApiClient.request(
+      method: RestMethod.post,
+      body: jsonEncode(lOrderItem.map((item) => item.toJson()).toList()),
+      path: '${UrlConstants.appApiBaseUrl}/v1/orders?tableId=$tableId',
+    );
+  }
 
 
 

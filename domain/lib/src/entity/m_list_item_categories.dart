@@ -17,6 +17,6 @@ class MItemCategories with _$MItemCategories {
     @Default('') String name,
     @Default(-1) double price,
     @Default('') String image,
-    @Default('') String beverages,
+    @Default('') String categoryName,
   }) = _MItemCategories;
 }

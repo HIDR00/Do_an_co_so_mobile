@@ -69,7 +69,6 @@ class FirebaseMessagingUtil {
       }
       return token;
     } catch (e) {
-      Log.e('toan: $e');
 
       return null;
     }
