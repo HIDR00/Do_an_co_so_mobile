@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:initializer/initializer.dart';
 import 'package:shared/shared.dart';
 
+import 'app/bloc/app_bloc.dart';
 import 'app/my_app.dart';
 import 'config/app_config.dart';
 import 'firebase_options.dart';
@@ -19,6 +20,10 @@ Future<void> _runMyApp() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseMessagingUtil.enableNotifcation();
+  await FirebaseMessagingUtil.onNotificationClick((message) async {
+     final AppBloc appBloc = GetIt.instance.get<AppBloc>();
+    await appBloc.navigator.push(const AppRouteInfo.login());
+  },);
   await AppInitializer(AppConfig.getInstance()).init();
   final initialResource = await _loadInitialResource();
   runApp(MyApp(initialResource: initialResource));

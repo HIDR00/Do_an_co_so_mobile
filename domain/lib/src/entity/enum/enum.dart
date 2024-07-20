@@ -49,8 +49,8 @@ enum NotificationType {
 
 enum BottomTab {
   home(icon: Icon(Icons.home), activeIcon: Icon(Icons.home)),
-  search(icon: Icon(Icons.search), activeIcon: Icon(Icons.search)),
-  myPage(icon: Icon(Icons.people), activeIcon: Icon(Icons.people));
+  search(icon: Icon(Icons.people), activeIcon: Icon(Icons.people)),
+  myPage(icon: Icon(Icons.settings), activeIcon: Icon(Icons.settings));
 
   const BottomTab({
     required this.icon,
@@ -62,11 +62,11 @@ enum BottomTab {
   String get title {
     switch (this) {
       case BottomTab.home:
-        return S.current.home;
+        return 'Oder';
       case BottomTab.search:
-        return S.current.search;
+        return 'Management.';
       case BottomTab.myPage:
-        return S.current.myPage;
+        return 'setting';
     }
   }
 }

@@ -3,5 +3,21 @@
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
+    <queries>
+        <!-- Nếu ứng dụng của bạn kiểm tra hỗ trợ SMS -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="sms" />
+        </intent>
+        <!-- Nếu ứng dụng của bạn kiểm tra hỗ trợ cuộc gọi -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tel" />
+        </intent>
+        <!-- Nếu ứng dụng của bạn kiểm tra hỗ trợ chế độ khởi chạy inAppBrowserView -->
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+    </queries>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

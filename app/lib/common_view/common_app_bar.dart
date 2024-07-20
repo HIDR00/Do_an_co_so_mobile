@@ -99,7 +99,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: EdgeInsets.only(left: Dimens.d16.responsive()),
                 child: _buildIcon(
                   leadingIcon == LeadingIcon.close
-                      ? Assets.images.iconClose
+                      ? Assets.images.iconBack
                       : Assets.images.iconBack,
                 ),
               ),

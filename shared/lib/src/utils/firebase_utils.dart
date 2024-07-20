@@ -94,4 +94,5 @@ class FirebaseMessagingUtil {
   ) async {
     FirebaseMessaging.onMessageOpenedApp.listen(action);
   }
+  
 }

@@ -35,6 +35,7 @@ export 'common_view/shimmer/circle_shimmer.dart';
 export 'common_view/shimmer/rounded_rectangle_shimmer.dart';
 export 'common_view/shimmer/shimmer.dart';
 export 'common_view/shimmer/shimmer_loading.dart';
+export 'common_view/table.dart';
 export 'config/app_config.dart';
 export 'di/di.dart';
 export 'exception_handler/exception_handler.dart';

@@ -15,8 +15,9 @@ import 'bloc/order.dart';
 
 @RoutePage()
 class OrderPage extends StatefulWidget {
-  const OrderPage({required this.lItemCategoriesOder, super.key});
+  const OrderPage({required this.lItemCategoriesOder, required this.tableId, super.key});
   final List<MItemCategories> lItemCategoriesOder;
+  final int tableId;
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
@@ -30,6 +31,15 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
     super.initState();
     bloc.add(OrderPageInitiated(widget.lItemCategoriesOder));
     fetchitem();
+  }
+
+  double calculateTotal() {
+    double total = 0.0;
+    widget.lItemCategoriesOder.forEach((itemCategory) {
+      int quantity = item[itemCategory.id] ?? 0;
+      total += itemCategory.price * quantity;
+    });
+    return total;
   }
 
   void fetchitem() {
@@ -84,16 +94,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                       const SizedBox(
                         height: Dimens.d20,
                       ),
-                      Container(
-                        height: Dimens.d50,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: dropdownValue == 'Chuyển khoản' ? AppColors.current.baseColors4 : null,
-                          borderRadius: BorderRadius.circular(Dimens.d10),
-                          border: Border.all(color: AppColors.current.baseColors4)
-                        ),
-                        child: Center(child: Text(dropdownValue == 'Chuyển khoản' ? 'Pay' : 'Oder',style: AppTextStyles.s20w700Title2().copyWith(color: dropdownValue == 'Chuyển khoản' ? Colors.white : AppColors.current.baseColors4))),
-                      ),
+                      _renderButton(state),
                       const SizedBox(
                         height: Dimens.d20,
                       ),
@@ -106,16 +107,47 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
     );
   }
 
+  Widget _renderButton(OrderState state) {
+    return GestureDetector(
+      onTap: () {
+         bloc.add(OrderPagePostPay(item,widget.lItemCategoriesOder,widget.tableId,dropdownValue == 'Chuyển khoản' ? true : false));
+      },
+      child: Container(
+        height: Dimens.d50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: dropdownValue == 'Chuyển khoản' ? AppColors.current.baseColors4 : null,
+            borderRadius: BorderRadius.circular(Dimens.d10),
+            border: Border.all(color: AppColors.current.baseColors4)),
+        child: Center(
+            child: Text(dropdownValue == 'Chuyển khoản' ? 'Pay' : 'Oder',
+                style: AppTextStyles.s20w700Title2().copyWith(
+                    color: dropdownValue == 'Chuyển khoản'
+                        ? Colors.white
+                        : AppColors.current.baseColors4))),
+      ),
+    );
+  }
+
   Container _renderPayment() {
     return Container(
       decoration: BoxDecoration(
           border: Border(top: BorderSide(color: AppColors.current.baseColors2, width: 0.5))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            'Payment Method',
-            style: AppTextStyles.s18w700Title2(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Payment Method',
+                style: AppTextStyles.s18w700Title2(),
+              ),
+              Text(
+                calculateTotal().toString(),
+                style: AppTextStyles.s18w700Title2(),
+              ),
+            ],
           ),
           DropdownButton<String>(
             value: dropdownValue,
@@ -124,10 +156,8 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
             elevation: 16,
             style: AppTextStyles.s12w400Description(),
             onChanged: (String? newValue) {
-              // Cho phép newValue có thể là null
               setState(() {
                 if (newValue != null) {
-                  // Kiểm tra nếu newValue không phải là null mới cập nhật
                   dropdownValue = newValue;
                 }
               });
@@ -180,6 +210,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                               child: CachedNetworkImage(
                                 imageUrl: itemCategories[index].image,
                                 height: Dimens.d70,
+                                width: Dimens.d100,
                                 fit: BoxFit.cover,
                               )),
                           const SizedBox(width: Dimens.d30),
@@ -187,10 +218,13 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                itemCategories[index].name,
-                                style: AppTextStyles.s14w600Primary(),
-                                overflow: TextOverflow.ellipsis,
+                              SizedBox(
+                                width: Dimens.d100,
+                                child: Text(
+                                  itemCategories[index].name,
+                                  style: AppTextStyles.s14w600Primary(),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                               const SizedBox(height: Dimens.d5),
                               Container(
@@ -211,7 +245,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                                             setState(() {
                                               item[itemCategories[index].id] =
                                                   (item[itemCategories[index].id] ?? 0) - 1;
-                                              if(item[itemCategories[index].id]! < 0){
+                                              if (item[itemCategories[index].id]! < 0) {
                                                 item[itemCategories[index].id] = 0;
                                               }
                                             });

@@ -5,3 +5,6 @@ environment:
 
 dev_dependencies:
   melos: 3.1.0
+dependencies:
+  snapping_bottom_sheet: ^1.0.4
+  url_launcher: ^6.1.14

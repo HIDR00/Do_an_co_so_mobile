@@ -30,16 +30,36 @@ class AppTextField extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             title,
-            style: AppTextStyles.s14w400Secondary(),
+            style: AppTextStyles.s16w600Primary().copyWith(color: AppColors.current.baseColors4),
           ),
         ),
         SizedBox(height: Dimens.d8.responsive()),
-        TextField(
-          onTap: onTap,
-          onChanged: onChanged,
-          controller: controller,
-          decoration: InputDecoration(hintText: hintText),
-          keyboardType: keyboardType,
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), // Màu bóng và độ trong suốt
+                spreadRadius: 1, // Độ rộng của vùng bóng đổ xung quanh
+                blurRadius: 3, // Độ mờ của bóng đổ
+                offset: Offset(0, 2), // Thay đổi vị trí bóng đổ
+              ),
+            ],
+          ),
+          child: TextField(
+            onTap: onTap,
+            onChanged: onChanged,
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: hintText,
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+            ),
+            keyboardType: keyboardType,
+          ),
         ),
       ],
     );

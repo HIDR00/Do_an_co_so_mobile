@@ -67,8 +67,8 @@ class _TabViewWidgetState extends State<TabViewWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '\$${state.lItemCategories[index].price.toString()}',
-                                style: AppTextStyles.s20w700Title2(),
+                                '${state.lItemCategories[index].price.toString()}đ',
+                                style: AppTextStyles.s14w400Description(),
                               ),
                               GestureDetector(
                                 onTap: () {

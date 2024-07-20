@@ -8,7 +8,8 @@ import 'bloc/menu.dart';
 
 @RoutePage()
 class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+  const MenuPage({required this.tableId, super.key});
+  final int tableId;
 
   @override
   State<MenuPage> createState() => _MenuPageState();
@@ -40,7 +41,7 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
                   padding: const EdgeInsets.only(right: Dimens.d20, top: Dimens.d15),
                   child: GestureDetector(
                     onTap: () {
-                        navigator.push(AppRouteInfo.order(state.lItemCategoriesOder));
+                        navigator.push(AppRouteInfo.order(state.lItemCategoriesOder,widget.tableId));
                       },
                     child: Stack(children: [
                       Assets.images.bag.svg(),
