@@ -95,51 +95,44 @@ class AppApiService {
   Future<ApiListTableData?> getTables() async {
     return _noneAuthAppServerApiClient.request(
       method: RestMethod.get,
-      path: '${UrlConstants.appApiBaseUrl}/v1/tables/all',
+      path: '${UrlConstants.appApiBaseUrl}/v1/tables',
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
       decoder: (data) => ApiListTableData.fromJson(data as Map<String, dynamic>),
     );
   }
 
-  Future<ApiCategoriesResponse?> getCategory() async {
+  Future<ApiListCategoriesData?> getCategory() async {
     return _noneAuthAppServerApiClient.request(
       method: RestMethod.get,
-      path: '${UrlConstants.appApiBaseUrl}/v1/categories/all',
+      path: '${UrlConstants.appApiBaseUrl}/v1/categories',
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
-      decoder: (data) => ApiCategoriesResponse.fromJson(data as Map<String, dynamic>),
+      decoder: (data) => ApiListCategoriesData.fromJson(data as Map<String, dynamic>),
     );
   }
 
-  Future<ApiListItemCategoriesData?> getItemMenu(String categories) async {
+  Future<ApiListMenuData?> getItemMenu() async {
     return _noneAuthAppServerApiClient.request(
       method: RestMethod.get,
-      path: '${UrlConstants.appApiBaseUrl}/v1/menu/$categories',
+      path: '${UrlConstants.appApiBaseUrl}/v1/menus',
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
-      decoder: (data) => ApiListItemCategoriesData.fromJson(data as Map<String, dynamic>),
-    );
-  }
-
-  Future<void> postListOrder(List<ApiOderItemData> lOrderItem,int tableId) async {
-    await _noneAuthAppServerApiClient.request(
-      method: RestMethod.post,
-      body: jsonEncode(lOrderItem.map((item) => item.toJson()).toList()),
-      path: '${UrlConstants.appApiBaseUrl}/v1/orders?tableId=$tableId',
+      decoder: (data) => ApiListMenuData.fromJson(data as Map<String, dynamic>),
     );
   }
 
   Future<void> postNoti(String title, String body) async {
     await _noneAuthAppServerApiClient.request(
-      method: RestMethod.post, 
+      method: RestMethod.post,
       body: {
         'title': title,
         'body': body,
-        'image': 'https://posapp.vn/wp-content/uploads/2020/09/%C4%91%E1%BB%93ng-b%E1%BB%99-n%E1%BB%99i-th%E1%BA%A5t.jpg'
+        'image':
+            'https://posapp.vn/wp-content/uploads/2020/09/%C4%91%E1%BB%93ng-b%E1%BB%99-n%E1%BB%99i-th%E1%BA%A5t.jpg'
       },
       path: '${UrlConstants.appApiBaseUrl}/v1/notifications/send',
     );
   }
 
-   Future<ApiPaymentData?> postPay(int tableId,bool isMomo) async {
+  Future<ApiPaymentData?> postPay(int tableId, bool isMomo) async {
     return _noneAuthAppServerApiClient.request(
       method: RestMethod.post,
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
@@ -148,44 +141,52 @@ class AppApiService {
     );
   }
 
-  Future<ApiLoginData?> postUser(String? email,String? password) async {
+  Future<ApiUserResponseData?> postUser(String? email, String? password) async {
     return _noneAuthAppServerApiClient.request(
       method: RestMethod.post,
-      body: {
-        'username': email,
-        'password': password
-      },
+      body: {'email': email, 'password': password},
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
-      decoder: (data) => ApiLoginData.fromJson(data as Map<String, dynamic>),
-      path: '${UrlConstants.appApiBaseUrl}/v1/users/login?isAdmin=false',
+      decoder: (data) => ApiUserResponseData.fromJson(data as Map<String, dynamic>),
+      path: '${UrlConstants.appApiBaseUrl}/v1/users/auth',
     );
   }
-  
-  Future<ApiListOderItemGuestData?> getOderGuest(int tableId) async {
+
+  Future<ApiTableOrderGetData?> getOderGuest(int tableId) async {
     return _noneAuthAppServerApiClient.request(
       method: RestMethod.get,
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
-      decoder: (data) {
-      final Map<String, dynamic> dataMap = data as Map<String, dynamic>;
-      return ApiListOderItemGuestData.fromJson(dataMap['data'] as Map<String, dynamic>);
-    },
-      path: '${UrlConstants.appApiBaseUrl}/v1/orders/getOrderDetails?tableId=$tableId',
+      decoder: (data) => ApiTableOrderGetData.fromJson(data as Map<String, dynamic>),
+      path: '${UrlConstants.appApiBaseUrl}/v1/orders/$tableId',
     );
   }
 
-  Future<void> postFreeTable(int tableId) async {
-    await _noneAuthAppServerApiClient.request(
+  Future<ApiTableOrderData?> postTableOrder(int tableId, ApiTableOrderData tableOrderData) async {
+    return _noneAuthAppServerApiClient.request(
       method: RestMethod.post,
+      body: tableOrderData.toJson(),
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
-      path: '${UrlConstants.appApiBaseUrl}/v1/tables/update?tableId=$tableId&isFree=true',
+      decoder: (data) => ApiTableOrderData.fromJson(data as Map<String, dynamic>),
+      path: '${UrlConstants.appApiBaseUrl}/v1/orders/$tableId',
     );
   }
 
-  Future<void> postDeviceToken(String token) async {
+  Future<void> deleteUser(int tableId) async {
     await _noneAuthAppServerApiClient.request(
-      method: RestMethod.post,
+      method: RestMethod.delete,
+      body: {
+        'status': 0, 
+        'pay_type': 0
+      },
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
-      path: '${UrlConstants.appApiBaseUrl}/v1/device-tokens?token=$token',
+      path: '${UrlConstants.appApiBaseUrl}/v1/orders/$tableId',
     );
   }
+
+  // Future<void> postDeviceToken(String token) async {
+  //   await _noneAuthAppServerApiClient.request(
+  //     method: RestMethod.post,
+  //     successResponseMapperType: SuccessResponseMapperType.jsonObject,
+  //     path: '${UrlConstants.appApiBaseUrl}/v1/device-tokens?token=$token',
+  //   );
+  // }
 }

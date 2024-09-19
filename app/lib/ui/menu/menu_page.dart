@@ -22,15 +22,20 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
     bloc.add(const MenuPageInitiated());
   }
 
+  List<Menu> getListMenu(ListMenu lMenu, int categoriesId) {
+    return lMenu.data.where((i) => i.categoriesId == categoriesId).toList();
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     return BlocBuilder<MenuBloc, MenuState>(
+      buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         if (state.lCategories.isEmpty) {
           return const CircularProgressIndicator();
         }
         return DefaultTabController(
-          length: 5,
+          length: state.lCategories.length,
           child: CommonScaffold(
             appBar: CommonAppBar(
               text: 'Menu',
@@ -41,8 +46,8 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
                   padding: const EdgeInsets.only(right: Dimens.d20, top: Dimens.d15),
                   child: GestureDetector(
                     onTap: () {
-                        navigator.push(AppRouteInfo.order(state.lItemCategoriesOder,widget.tableId));
-                      },
+                      navigator.push(AppRouteInfo.order(state.lMenuOder, widget.tableId));
+                    },
                     child: Stack(children: [
                       Assets.images.bag.svg(),
                       Container(
@@ -53,7 +58,9 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
                           shape: BoxShape.circle,
                           color: Colors.red,
                         ),
-                        child: Center(child: Text(state.lItemCategoriesOder.length.toString(),style: AppTextStyles.s12w400Description().copyWith(color: AppColors.primaryBG)))
+                        child: Center(
+                            child: Text(state.lMenuOder.length.toString(),
+                                style: AppTextStyles.s12w400Description().copyWith(color: AppColors.primaryBG))),
                       ),
                     ]),
                   ),
@@ -77,7 +84,16 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
                   child: TabBarView(
                     children: List<Widget>.generate(
                       state.lCategories.length,
-                      (index) => TabViewWidget(categories: state.lCategories[index].name,bloc: bloc),
+                      (index) => CategoriesWidget(
+                        lItem: getListMenu(state.lMenu, state.lCategories[index].id),
+                        onAddToCart: (menu) {
+                          if (state.lMenuOder.contains(menu)) {
+                          } else {
+                            bloc.add(TabViewAddOrder(menu));
+                          }
+                          navigator.showErrorSnackBar('Món ăn đã được chọn');
+                        },
+                      ),
                     ),
                   ),
                 )

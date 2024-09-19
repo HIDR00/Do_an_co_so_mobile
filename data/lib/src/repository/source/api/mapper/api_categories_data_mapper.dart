@@ -4,17 +4,15 @@ import 'package:injectable/injectable.dart';
 import '../../../../../data.dart';
 
 @Injectable()
-class ApiCategoriesDataMapper extends BaseDataMapper<ApiCategoriesData, MCategories> {
+class ApiCategoriesDataMapper extends BaseDataMapper<ApiCategoriesData, Categories> {
   @override
-  MCategories mapToEntity(ApiCategoriesData? data) {
-    return MCategories(
-      id: data?.id ?? -1,
-      name: data?.categoryName ?? '',
-    );
-  }
-  MListCategories mapToEntityList(ApiListCategoriesData? dataList) {
-    return MListCategories(
-      lMCategories: dataList?.categories?.map((data) => mapToEntity(data)).toList() ?? []
+  Categories mapToEntity(ApiCategoriesData? data) {
+    return Categories(
+      id: data?.id ?? Categories.defaultId,
+      createdAt: data?.createdAt ?? Categories.defaultCreatedAt,
+      updatedAt: data?.updatedAt ?? Categories.defaultUpdatedAt,
+      deletedAt: data?.deletedAt ?? Categories.defaultDeletedAt,
+      name: data?.name ?? Categories.defaultName,
     );
   }
 }

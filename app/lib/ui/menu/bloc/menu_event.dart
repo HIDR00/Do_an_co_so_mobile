@@ -15,11 +15,6 @@ class MenuPageInitiated extends MenuEvent with _$MenuPageInitiated {
 }
 
 @freezed
-class TabViewInitiated extends MenuEvent with _$TabViewInitiated {
-  const factory TabViewInitiated(String categories) = _TabViewInitiated;
-}
-
-@freezed
 class TabViewAddOrder extends MenuEvent with _$TabViewAddOrder {
-  const factory TabViewAddOrder(MItemCategories itemCategoriesOder) = _TabViewAddOrder;
+  const factory TabViewAddOrder(Menu menu) = _TabViewAddOrder;
 }

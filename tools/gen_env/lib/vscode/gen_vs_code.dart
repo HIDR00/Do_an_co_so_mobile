@@ -120,7 +120,7 @@ class LaunchJsonWriter {
       if (k == flavorKey) {
         dartDefineArgs.add('$k=$v');
       } else {
-        dartDefineArgs.add('$k=\${${flavor.prefix}_$k}');
+        dartDefineArgs.add('$k=$v');
       }
     });
 

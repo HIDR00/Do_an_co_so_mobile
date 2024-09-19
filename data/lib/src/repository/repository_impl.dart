@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dartx/dartx.dart';
 import 'package:domain/domain.dart';
 import 'package:injectable/injectable.dart';
 
@@ -16,9 +17,10 @@ class RepositoryImpl implements Repository {
     this._genderDataMapper,
     this._localUserDataMapper,
     this._apiTableDataMapper,
-    this._apiCategoriesDataMapper,
-    this._apiItemCategoriesDataMapper,
-    this._apiOderItemDataMapper
+    this._apiListCategoriesDataMapper,
+    this._apiListMenuDataMapper,
+    this._apiTableOrderDataMapper,
+    this._apiTableOrderGetDataMapper
   );
 
   final AppApiService _appApiService;
@@ -30,9 +32,11 @@ class RepositoryImpl implements Repository {
   final GenderDataMapper _genderDataMapper;
   final LocalUserDataMapper _localUserDataMapper;
   final ApiTableDataMapper _apiTableDataMapper;
-  final ApiCategoriesDataMapper _apiCategoriesDataMapper;
-  final ApiItemCategoriesDataMapper _apiItemCategoriesDataMapper;
-  final ApiOderItemDataMapper _apiOderItemDataMapper;
+  final ApiListCategoriesDataMapper _apiListCategoriesDataMapper;
+  final ApiListMenuDataMapper _apiListMenuDataMapper;
+  final ApiTableOrderDataMapper _apiTableOrderDataMapper;
+  final ApiTableOrderGetDataMapper _apiTableOrderGetDataMapper;
+
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
 
@@ -195,19 +199,40 @@ class RepositoryImpl implements Repository {
       _appPreferences.saveCurrentUser(_preferenceUserDataMapper.mapToData(user));
 
   @override
-  Future<MListCategories> getCategory() async {
+  Future<ListCategories> getCategory() async {
     final response = await _appApiService.getCategory();
-    return _apiCategoriesDataMapper.mapToEntityList(response?.data);
+    return _apiListCategoriesDataMapper.mapToEntity(response);
   }
 
   @override
-  Future<MItemCategoriesResponseList> getItemMenu(String categories) async {
-    final response = await _appApiService.getItemMenu(categories);
-    return _apiItemCategoriesDataMapper.mapToEntityList(response?.data);
+  Future<ListMenu> getItemMenu() async {
+    final response = await _appApiService.getItemMenu();
+    return _apiListMenuDataMapper.mapToEntity(response);
   }
 
   @override
-  Future<void> postListOrder(List<MOrderItem> lOrderItem,int tableId) async {
-    await _appApiService.postListOrder(List<ApiOderItemData>.from(lOrderItem.map((data) => _apiOderItemDataMapper.mapToData(data)).toList()),tableId);
+  Future<User> postUser(String email,String password) async {
+    final response = await _appApiService.postUser(email,password);
+    if(response!.userData!.name.isNotNullOrEmpty){
+      await _appPreferences.saveAccessToken(response!.userData!.name ?? '');
+    }
+    return _userDataMapper.mapToEntity(response.userData);
+  }
+
+  @override
+  Future<TableOrderGet> getOderGuest(int tableId) async {
+    final response = await _appApiService.getOderGuest(tableId);
+    return _apiTableOrderGetDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<TableOrder> postTableOrder(int tableId,TableOrder tableOrder) async {
+    final response = await _appApiService.postTableOrder(tableId,_apiTableOrderDataMapper.mapToData(tableOrder));
+    return _apiTableOrderDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<void> deleteUser(int tableId) async {
+    await _appApiService.deleteUser(tableId);
   }
 }

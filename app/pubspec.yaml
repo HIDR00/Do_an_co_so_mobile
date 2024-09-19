@@ -16,8 +16,6 @@ dependencies:
   dartx: 1.2.0
   domain:
     path: ../domain
-  data:
-    path: ../data
   firebase_core: ^2.24.2
   firebase_messaging: ^14.7.10
   flutter:

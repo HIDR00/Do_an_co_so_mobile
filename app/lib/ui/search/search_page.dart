@@ -43,7 +43,7 @@ class _SearchPageState extends BasePageState<SearchPage, SearchBloc> {
                 ),
                 itemCount: state.lTable.length,
                 itemBuilder: (context, index) {
-                  return TableCommon(index: index, lTable: state.lTable,ontap: () => navigator.push(AppRouteInfo.guestOder(state.lTable[index].id)),);
+                  return TableCommon(index: index, lTable: state.lTable,ontap: () => state.lTable[index].status == 1 ? navigator.push(AppRouteInfo.guestOder(state.lTable[index].id)) : navigator.showErrorSnackBar('Bàn hiện tại chưa có order'));
                 },
               ),
             ),

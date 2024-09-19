@@ -39,7 +39,7 @@
     },
     {
       "id": "2:3616158557773932118",
-      "lastPropertyId": "6:4698674987125156563",
+      "lastPropertyId": "9:152537173213444558",
       "name": "LocalUserData",
       "properties": [
         {
@@ -62,18 +62,18 @@
           "type": 9
         },
         {
-          "id": "4:7222186721110839801",
-          "name": "money",
+          "id": "7:4073324233561478766",
+          "name": "password",
           "type": 9
         },
         {
-          "id": "5:4211253740468871819",
-          "name": "gender",
-          "type": 6
+          "id": "8:7278736173479477139",
+          "name": "name",
+          "type": 9
         },
         {
-          "id": "6:4698674987125156563",
-          "name": "birthday",
+          "id": "9:152537173213444558",
+          "name": "roleType",
           "type": 6
         }
       ],
@@ -94,7 +94,11 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    7222186721110839801,
+    4211253740468871819,
+    4698674987125156563
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

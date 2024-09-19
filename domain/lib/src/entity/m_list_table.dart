@@ -14,6 +14,7 @@ class MListTable with _$MListTable {
 class MTable with _$MTable {
   const factory MTable({
     @Default(-1) int id,
-    @Default('') String status,
+    @Default(-1) int status,
+    @Default(-1) int payType,
   }) = _MTable;
 }

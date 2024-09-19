@@ -9,8 +9,8 @@ part 'menu_state.freezed.dart';
 class MenuState extends BaseBlocState with _$MenuState {
   factory MenuState({
     @Default(false) bool isShimmerLoading,
-    @Default(<MCategories>[]) List<MCategories> lCategories,
-    @Default(<MItemCategories>[]) List<MItemCategories> lItemCategories,
-    @Default(<MItemCategories>[]) List<MItemCategories> lItemCategoriesOder
+    @Default(<Categories>[]) List<Categories> lCategories,
+    @Default(ListMenu()) ListMenu lMenu,
+    @Default(<Menu>[]) List<Menu> lMenuOder
   }) = _MenuState;
 }

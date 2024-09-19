@@ -21,7 +21,7 @@ class UrlConstants {
   static String get appApiBaseUrl {
     switch (EnvConstants.flavor) {
       case Flavor.develop:
-        return 'https://api.thinhtran.online/api';
+        return EnvConstants.authApiUrl;
       case Flavor.qa:
         return '';
       case Flavor.staging:

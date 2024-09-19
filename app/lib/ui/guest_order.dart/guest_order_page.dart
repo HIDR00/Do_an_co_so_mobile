@@ -1,5 +1,4 @@
 import 'package:auto_route/annotations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared/shared.dart';
@@ -31,7 +30,7 @@ class _GuestOrderPageState extends BasePageState<GuestOrderPage, GuestOrderBloc>
   Widget buildPage(BuildContext context) {
     return BlocBuilder<GuestOrderBloc, GuestOrderState>(
       builder: (context, state) {
-        return state.oder!.apiOderItemGuestData.isNullOrEmpty ? Center(
+        return state.loder.orders.isNullOrEmpty ? const Center(
             child: CircularProgressIndicator(),
           ) :
          CommonScaffold(
@@ -151,7 +150,7 @@ class _GuestOrderPageState extends BasePageState<GuestOrderPage, GuestOrderBloc>
                               SizedBox(height: 20),
                               ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: state.oder?.apiOderItemGuestData?.length,
+                                itemCount: state.loder.orders.length,
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -159,12 +158,12 @@ class _GuestOrderPageState extends BasePageState<GuestOrderPage, GuestOrderBloc>
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          state.oder?.apiOderItemGuestData?[index].item ?? '',
+                                          state.loder.orders[index].menu.name,
                                           style: AppTextStyles.s14w400Description()
                                               .copyWith(color: AppColors.current.baseColors1),
                                         ),
                                         Text(
-                                          'x${state.oder?.apiOderItemGuestData?[index].quantity ?? 0}',
+                                          'x${state.loder.orders[index].quantity}',
                                           style: AppTextStyles.s14w600Primary()
                                               .copyWith(color: AppColors.current.baseColors1),
                                         ),
@@ -198,6 +197,7 @@ class _GuestOrderPageState extends BasePageState<GuestOrderPage, GuestOrderBloc>
   Widget _renderButton(GuestOrderState state) {
     return GestureDetector(
       onTap: () {
+        bloc.add(GuestOrderPageFreeTable(widget.tableId));
         navigator.pop();
       },
       child: Container(

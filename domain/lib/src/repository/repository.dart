@@ -73,9 +73,15 @@ abstract class Repository {
 
   Future<MListTable> getTables();
 
-  Future<MListCategories> getCategory();
+  Future<ListCategories> getCategory();
 
-  Future<MItemCategoriesResponseList> getItemMenu(String categories);
+  Future<ListMenu> getItemMenu();
 
-  Future<void> postListOrder(List<MOrderItem> lOrderItem,int tableId);
+  Future<User> postUser(String email,String password);
+
+  Future<TableOrderGet> getOderGuest(int tableId);
+
+  Future<TableOrder> postTableOrder(int tableId,TableOrder tableOrder);
+
+  Future<void> deleteUser(int tableId);
 }

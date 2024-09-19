@@ -13,7 +13,7 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       main: () => const MainRoute(),
       itemDetail: (user) => ItemDetailRoute(user: user),
       menu: (tableId) => MenuRoute(tableId: tableId),
-      order: (lItemCategoriesOder, tableId) => OrderRoute(lItemCategoriesOder: lItemCategoriesOder, tableId: tableId),
+      order:(lMenu, tableId) => OrderRoute(lMenuOder: lMenu,tableId: tableId),
       myPage: () => const MyPageRoute(),
       search: () => const SearchRoute(),
       guestOder: (tableId) =>  GuestOrderRoute(tableId: tableId),

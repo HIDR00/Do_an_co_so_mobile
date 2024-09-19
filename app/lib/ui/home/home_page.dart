@@ -27,6 +27,7 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
   @override
   Widget buildPage(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (previous, current) => previous != current,
       bloc: bloc,
       builder: (context, state) {
         return CommonScaffold(
@@ -45,7 +46,17 @@ class _HomePageState extends BasePageState<HomePage, HomeBloc> {
                 ),
                 itemCount: state.lTable.length,
                 itemBuilder: (context, index) {
-                  return TableCommon(index: index, lTable: state.lTable,ontap: () => navigator.push(AppRouteInfo.menu(state.lTable[index].id)),);
+                  return TableCommon(
+                    index: index,
+                    lTable: state.lTable,
+                    ontap: () {
+                      if(state.lTable[index].status == 1){
+                        navigator.showErrorSnackBar('Bàn đã có người');
+                      }else{
+                        navigator.push(AppRouteInfo.menu(state.lTable[index].id));
+                      }
+                    },
+                  );
                 },
               ),
             ),

@@ -9,11 +9,12 @@ part 'order_state.freezed.dart';
 class OrderState extends BaseBlocState with _$OrderState {
   factory OrderState({
     @Default(false) bool isShimmerLoading,
-    @Default(<MItemCategories>[]) List<MItemCategories> lBeverages,
-    @Default(<MItemCategories>[]) List<MItemCategories> lAppetizers,
-    @Default(<MItemCategories>[]) List<MItemCategories> lMainCourse,
-    @Default(<MItemCategories>[]) List<MItemCategories> lDesserts,
-    @Default(<MItemCategories>[]) List<MItemCategories> lSalads,
+    @Default(<Menu>[]) List<Menu> lAppetizers,
+    @Default(<Menu>[]) List<Menu> lMainCourse,
+    @Default(<Menu>[]) List<Menu> lVegetarianDishes,
+    @Default(<Menu>[]) List<Menu> lFusionDishes,
+    @Default(<Menu>[]) List<Menu> lDesserts,
+    @Default(<Menu>[]) List<Menu> lDrinks,
     @Default(<int, int>{}) Map<int, int> item,
   }) = _OrderState;
 }

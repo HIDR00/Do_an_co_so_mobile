@@ -11,7 +11,7 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.main() = _Main;
   const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
   const factory AppRouteInfo.menu(int tableId) = _MenuPage;
-  const factory AppRouteInfo.order(List<MItemCategories> lItemCategoriesOder, int tableId) = _OrderPage;
+  const factory AppRouteInfo.order(List<Menu> lMenu, int tableId) = _OrderPage;
   const factory AppRouteInfo.myPage() = _MyPagePage;
   const factory AppRouteInfo.search() = _SearchPage;
   const factory AppRouteInfo.guestOder(int tableId) = _GuestOrderPage;

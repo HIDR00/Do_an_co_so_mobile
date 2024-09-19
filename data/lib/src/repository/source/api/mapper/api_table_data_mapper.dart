@@ -9,7 +9,8 @@ class ApiTableDataMapper extends BaseDataMapper<ApiTableData, MTable> {
   MTable mapToEntity(ApiTableData? data) {
     return MTable(
       id: data?.id ?? -1,
-      status: data?.status ?? '',
+      status: data?.status ?? -1,
+      payType: data?.payType ?? -1
     );
   }
   MListTable mapToEntityList(ApiListTableData? dataList) {

@@ -11,7 +11,7 @@ class TableCommon extends StatelessWidget {
   TableCommon({required this.index, required this.lTable, super.key, this.ontap});
   final int index;
   final List<MTable> lTable;
-   void Function()? ontap;
+  void Function()? ontap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -20,16 +20,17 @@ class TableCommon extends StatelessWidget {
         aspectRatio: 1,
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.current.bgTable,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(Dimens.d30),
-            border: lTable[index].status != 'FREE'
+            border: lTable[index].status != 0
                 ? Border.all(color: AppColors.current.borderTable, width: Dimens.d2)
                 : null,
             boxShadow: [
               BoxShadow(
-                color: AppColors.genericBlack.withOpacity(0.05),
-                blurRadius: Dimens.d10,
+                color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 1,
+                blurRadius: 3,
+                offset: const Offset(0, 2), 
               ),
             ],
           ),

@@ -10,7 +10,9 @@
                 "--flavor",
                 "develop",
                 "--dart-define",
-                "FLAVOR=develop"
+                "FLAVOR=develop",
+                "--dart-define",
+                "AUTH_API_URL=https://huge-grizzly-renewing.ngrok-free.app"
             ]
         },
         {
@@ -59,7 +61,9 @@
                 "--flavor",
                 "develop",
                 "--dart-define",
-                "FLAVOR=develop"
+                "FLAVOR=develop",
+                "--dart-define",
+                "AUTH_API_URL=https://huge-grizzly-renewing.ngrok-free.app"
             ]
         },
         {
@@ -111,7 +115,9 @@
                 "develop",
                 "--release",
                 "--dart-define",
-                "FLAVOR=develop"
+                "FLAVOR=develop",
+                "--dart-define",
+                "AUTH_API_URL=https://huge-grizzly-renewing.ngrok-free.app"
             ]
         },
         {

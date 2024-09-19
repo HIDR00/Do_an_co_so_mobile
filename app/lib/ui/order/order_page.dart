@@ -15,8 +15,8 @@ import 'bloc/order.dart';
 
 @RoutePage()
 class OrderPage extends StatefulWidget {
-  const OrderPage({required this.lItemCategoriesOder, required this.tableId, super.key});
-  final List<MItemCategories> lItemCategoriesOder;
+  const OrderPage({required this.lMenuOder, required this.tableId, super.key});
+  final List<Menu> lMenuOder;
   final int tableId;
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -29,13 +29,13 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
   @override
   void initState() {
     super.initState();
-    bloc.add(OrderPageInitiated(widget.lItemCategoriesOder));
+    bloc.add(OrderPageInitiated(widget.lMenuOder));
     fetchitem();
   }
 
   double calculateTotal() {
     double total = 0.0;
-    widget.lItemCategoriesOder.forEach((itemCategory) {
+    widget.lMenuOder.forEach((itemCategory) {
       int quantity = item[itemCategory.id] ?? 0;
       total += itemCategory.price * quantity;
     });
@@ -44,7 +44,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
 
   void fetchitem() {
     item = {};
-    for (var i in widget.lItemCategoriesOder) {
+    for (var i in widget.lMenuOder) {
       item[i.id] = 1;
     }
   }
@@ -61,35 +61,40 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
             leadingIconColor: AppColors.genericBlack,
           ),
           body: Container(
+              padding: const EdgeInsets.only(left: Dimens.d10, right: Dimens.d10, top: Dimens.d15),
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: AppColors.primaryBG,
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(left: Dimens.d10, right: Dimens.d10, top: Dimens.d15),
-                child: SingleChildScrollView(
-                  child: Column(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        state.lAppetizers.isNullOrEmpty
+                            ? const SizedBox()
+                            : _renderCard(state.lAppetizers, 'Appetizers'),
+                        state.lMainCourse.isNullOrEmpty
+                            ? const SizedBox()
+                            : _renderCard(state.lMainCourse, 'Main Course'),
+                        state.lVegetarianDishes.isNullOrEmpty
+                            ? const SizedBox()
+                            : _renderCard(state.lVegetarianDishes, 'Vegetarian Dishes'),
+                        state.lFusionDishes.isNullOrEmpty
+                            ? const SizedBox()
+                            : _renderCard(state.lFusionDishes, 'Fusion Dishes'),
+                        state.lDesserts.isNullOrEmpty ? const SizedBox() : _renderCard(state.lDesserts, 'Desserts'),
+                        state.lDrinks.isNullOrEmpty ? const SizedBox() : _renderCard(state.lDrinks, 'Drinks'),
+                        const SizedBox(
+                          height: Dimens.d20,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
                     children: [
-                      state.lBeverages.isNullOrEmpty
-                          ? const SizedBox()
-                          : _renderCard(state.lBeverages, 'Beverages'),
-                      state.lAppetizers.isNullOrEmpty
-                          ? const SizedBox()
-                          : _renderCard(state.lAppetizers, 'Appetizers'),
-                      state.lMainCourse.isNullOrEmpty
-                          ? const SizedBox()
-                          : _renderCard(state.lMainCourse, 'Main Course'),
-                      state.lDesserts.isNullOrEmpty
-                          ? const SizedBox()
-                          : _renderCard(state.lDesserts, 'Desserts'),
-                      state.lSalads.isNullOrEmpty
-                          ? const SizedBox()
-                          : _renderCard(state.lSalads, 'Vegetarian'),
-                      const SizedBox(
-                        height: Dimens.d20,
-                      ),
                       _renderPayment(),
                       const SizedBox(
                         height: Dimens.d20,
@@ -100,7 +105,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                       ),
                     ],
                   ),
-                ),
+                ],
               )),
         );
       },
@@ -110,7 +115,8 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
   Widget _renderButton(OrderState state) {
     return GestureDetector(
       onTap: () {
-         bloc.add(OrderPagePostPay(item,widget.lItemCategoriesOder,widget.tableId,dropdownValue == 'Chuyển khoản' ? true : false));
+        bloc.add(
+            OrderPagePostOrder(item, widget.lMenuOder, widget.tableId, dropdownValue == 'Chuyển khoản' ? 1 : 0));
       },
       child: Container(
         height: Dimens.d50,
@@ -121,18 +127,19 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
             border: Border.all(color: AppColors.current.baseColors4)),
         child: Center(
             child: Text(dropdownValue == 'Chuyển khoản' ? 'Pay' : 'Oder',
-                style: AppTextStyles.s20w700Title2().copyWith(
-                    color: dropdownValue == 'Chuyển khoản'
-                        ? Colors.white
-                        : AppColors.current.baseColors4))),
+                style: AppTextStyles.s20w700Title2()
+                    .copyWith(color: dropdownValue == 'Chuyển khoản' ? Colors.white : AppColors.current.baseColors4))),
       ),
     );
   }
 
-  Container _renderPayment() {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: AppColors.current.baseColors2, width: 0.5))),
+  Widget _renderPayment() {
+    return SizedBox(
+      // decoration: BoxDecoration(
+      //   border: Border(
+      //     top: BorderSide(color: AppColors.current.baseColors2, width: 0.5),
+      //   ),
+      // ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -162,8 +169,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                 }
               });
             },
-            items: <String>['Chuyển khoản', 'Thanh toán bằng tiền mặt']
-                .map<DropdownMenuItem<String>>((String value) {
+            items: <String>['Chuyển khoản', 'Thanh toán bằng tiền mặt'].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -175,13 +181,12 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
     );
   }
 
-  Widget _renderCard(List<MItemCategories> itemCategories, String title) {
+  Widget _renderCard(List<Menu> lMenu, String title) {
     return Padding(
       padding: const EdgeInsets.only(top: Dimens.d18),
       child: Container(
         padding: const EdgeInsets.all(Dimens.d10),
-        decoration:
-            BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(Dimens.d10)),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(Dimens.d10)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -195,7 +200,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: itemCategories.length,
+              itemCount: lMenu.length,
               itemBuilder: (context, index) {
                 return Container(
                   padding: const EdgeInsets.only(top: Dimens.d6),
@@ -208,7 +213,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                           ClipRRect(
                               borderRadius: BorderRadius.circular(Dimens.d10),
                               child: CachedNetworkImage(
-                                imageUrl: itemCategories[index].image,
+                                imageUrl: lMenu[index].imageUrl,
                                 height: Dimens.d70,
                                 width: Dimens.d100,
                                 fit: BoxFit.cover,
@@ -221,7 +226,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                               SizedBox(
                                 width: Dimens.d100,
                                 child: Text(
-                                  itemCategories[index].name,
+                                  lMenu[index].name,
                                   style: AppTextStyles.s14w600Primary(),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -235,18 +240,16 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                                     borderRadius: BorderRadius.circular(Dimens.d8),
                                     border: Border.all(color: AppColors.current.baseColors3)),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: Dimens.d5, horizontal: Dimens.d5),
+                                  padding: const EdgeInsets.symmetric(vertical: Dimens.d5, horizontal: Dimens.d5),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              item[itemCategories[index].id] =
-                                                  (item[itemCategories[index].id] ?? 0) - 1;
-                                              if (item[itemCategories[index].id]! < 0) {
-                                                item[itemCategories[index].id] = 0;
+                                              item[lMenu[index].id] = (item[lMenu[index].id] ?? 0) - 1;
+                                              if (item[lMenu[index].id]! < 0) {
+                                                item[lMenu[index].id] = 0;
                                               }
                                             });
                                           },
@@ -257,19 +260,17 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                                         decoration: BoxDecoration(
                                             color: AppColors.primaryBG,
                                             borderRadius: BorderRadius.circular(Dimens.d8),
-                                            border:
-                                                Border.all(color: AppColors.current.baseColors3)),
+                                            border: Border.all(color: AppColors.current.baseColors3)),
                                         child: Center(
                                             child: Text(
-                                          item[itemCategories[index].id].toString(),
+                                          item[lMenu[index].id].toString(),
                                           style: AppTextStyles.s14w400Primary(),
                                         )),
                                       ),
                                       GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              item[itemCategories[index].id] =
-                                                  (item[itemCategories[index].id] ?? 0) + 1;
+                                              item[lMenu[index].id] = (item[lMenu[index].id] ?? 0) + 1;
                                             });
                                           },
                                           child: const Icon(Icons.add, size: Dimens.d20)),
@@ -284,7 +285,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                       Padding(
                         padding: const EdgeInsets.only(right: Dimens.d10),
                         child: Text(
-                          '\$${itemCategories[index].price * item[itemCategories[index].id]!.toDouble()}',
+                          '\$${lMenu[index].price * item[lMenu[index].id]!.toDouble()}',
                           style: AppTextStyles.s18w700Title2(),
                         ),
                       ),

@@ -10,18 +10,14 @@ class User with _$User {
   const factory User({
     @Default(User.defaultId) int id,
     @Default(User.defaultEmail) String email,
-    @Default(User.defaultMoney) BigDecimal money,
-    @Default(User.defaultBirthday) DateTime? birthday,
-    @Default(User.defaultAvatar) ImageUrl avatar,
-    @Default(User.defaultPhotos) List<ImageUrl> photos,
-    @Default(User.defaultGender) Gender gender,
+    @Default(User.defaultPassword) String password,
+    @Default(User.defaultName) String name,
+    @Default(User.defaultRoleType) int roleType,
   }) = _User;
 
-  static const defaultId = 0;
+  static const defaultId = -1;
   static const defaultEmail = '';
-  static const defaultMoney = BigDecimal.zero;
-  static const DateTime? defaultBirthday = null;
-  static const defaultAvatar = ImageUrl();
-  static const defaultPhotos = <ImageUrl>[];
-  static const defaultGender = Gender.defaultValue;
+  static const defaultPassword = '';
+  static const defaultName = '';
+  static const defaultRoleType = -1;
 }

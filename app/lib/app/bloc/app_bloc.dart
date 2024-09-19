@@ -67,7 +67,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
         _updateThemeSetting(output.isDarkMode);
         emit(state.copyWith(
           isDarkTheme: output.isDarkMode,
-          isLoggedIn: false,
+          isLoggedIn: output.isLoggedIn,
           languageCode: LanguageCode.en,
         ));
       },

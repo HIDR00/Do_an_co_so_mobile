@@ -17,7 +17,8 @@ class ApiListTableData with _$ApiListTableData {
 class ApiTableData with _$ApiTableData {
   const factory ApiTableData({
     @JsonKey(name: 'id') int? id,
-    @JsonKey(name: 'status') String? status,
+    @JsonKey(name: 'status') int? status,
+    @JsonKey(name: 'pay_type') int? payType,
   }) = _ApiTableData;
 
   factory ApiTableData.fromJson(Map<String, dynamic> json) => _$ApiTableDataFromJson(json);

@@ -8,7 +8,7 @@ part 'api_user_response_data.g.dart';
 @freezed
 class ApiUserResponseData with _$ApiUserResponseData {
   const factory ApiUserResponseData({
-    @JsonKey(name: 'user') ApiUserData? userData,
+    @JsonKey(name: 'data') ApiUserData? userData,
   }) = _ApiUserResponseData;
 
   factory ApiUserResponseData.fromJson(Map<String, dynamic> json) =>

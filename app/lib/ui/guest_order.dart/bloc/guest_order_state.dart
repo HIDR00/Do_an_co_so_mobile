@@ -1,4 +1,3 @@
-import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,6 +9,6 @@ part 'guest_order_state.freezed.dart';
 class GuestOrderState extends BaseBlocState with _$GuestOrderState {
   factory GuestOrderState({
     @Default(false) bool isShimmerLoading,
-    @Default(ApiListOderItemGuestData()) ApiListOderItemGuestData? oder
+    @Default(TableOrderGet()) TableOrderGet loder
   }) = _GuestOrderState;
 }

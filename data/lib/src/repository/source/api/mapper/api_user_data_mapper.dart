@@ -19,15 +19,9 @@ class ApiUserDataMapper extends BaseDataMapper<ApiUserData, User> {
     return User(
       id: data?.id ?? User.defaultId,
       email: data?.email ?? User.defaultEmail,
-      money: BigDecimal.tryParse(data?.money) ?? User.defaultMoney,
-      birthday: DateTimeUtils.tryParse(
-            date: data?.birthday,
-            format: DateTimeFormatConstants.appServerResponse,
-          ) ??
-          User.defaultBirthday,
-      avatar: _apiImageUrlDataMapper.mapToEntity(data?.avatar),
-      photos: _apiImageUrlDataMapper.mapToListEntity(data?.photos),
-      gender: _genderDataMapper.mapToEntity(data?.gender),
+      password: data?.password ?? User.defaultPassword,
+      name: data?.email ?? User.defaultEmail,
+      roleType: data?.roleType ?? User.defaultRoleType,
     );
   }
 }

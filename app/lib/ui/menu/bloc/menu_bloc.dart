@@ -14,10 +14,6 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
       _onMenuPageInitiated,
       transformer: log(),
     );
-    on<TabViewInitiated>(
-      _onTabViewInitiated,
-      transformer: log(),
-    );
     on<TabViewAddOrder>(
       _onTabViewAddOrder,
       transformer: log(),
@@ -29,22 +25,8 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
     return runBlocCatching(
       action: () async {
         final _result = await _repository.getCategory();
-        emit(state.copyWith(isShimmerLoading: true,lCategories: _result.lMCategories));
-    },
-    doOnSubscribe: () async {
-      
-    },
-    doOnEventCompleted: () async {
-      
-    },
-    );
-  }
-
-  FutureOr<void> _onTabViewInitiated(TabViewInitiated event, Emitter<MenuState> emit) async {
-    return runBlocCatching(
-      action: () async {
-        final _result = await _repository.getItemMenu(event.categories);
-        emit(state.copyWith(isShimmerLoading: true,lItemCategories: _result.lMItemCategories));
+        final _lMenu = await _repository.getItemMenu();
+        emit(state.copyWith(isShimmerLoading: true,lCategories: _result.data,lMenu: _lMenu));
     },
     doOnSubscribe: () async {
       
@@ -58,14 +40,15 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
   FutureOr<void> _onTabViewAddOrder(TabViewAddOrder event, Emitter<MenuState> emit) async {
     return runBlocCatching(
       action: () async {
-        final _result = List<MItemCategories>.from(state.lItemCategoriesOder);
-        _result.add(event.itemCategoriesOder);
-        emit(state.copyWith(lItemCategoriesOder: _result));
+        final _result = List<Menu>.from(state.lMenuOder);
+        _result.add(event.menu);
+        emit(state.copyWith(lMenuOder: _result));
     },
     doOnSubscribe: () async {
       
     },
     doOnEventCompleted: () async {
+      
     },
     );
   }

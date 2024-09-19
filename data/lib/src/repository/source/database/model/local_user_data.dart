@@ -5,30 +5,31 @@ import 'local_image_url_data.dart';
 @Entity()
 class LocalUserData {
   LocalUserData({
+    this.id,
     this.email,
-    this.money,
-    this.gender,
-    this.birthday,
+    this.password,
+    this.name,
+    this.roleType,
   });
 
   @Id()
   int? id;
   String? email;
-  String? money;
-  int? gender;
-  int? birthday;
+  String? password;
+  String? name;
+  int? roleType;
 
   final avatar = ToOne<LocalImageUrlData>();
   final photos = ToMany<LocalImageUrlData>();
 
   @override
   int get hashCode {
-    return id.hashCode ^ email.hashCode ^ money.hashCode ^ gender.hashCode ^ birthday.hashCode;
+    return id.hashCode ^ email.hashCode ^ password.hashCode ^ name.hashCode ^ roleType.hashCode;
   }
 
   @override
   String toString() {
-    return 'LocalUserData(id: $id, email: $email, money: $money, gender: $gender, birthday: $birthday)';
+    return 'LocalUserData(id: $id, email: $email, money: $password, gender: $name, birthday: $roleType)';
   }
 
   @override
@@ -40,8 +41,8 @@ class LocalUserData {
     return other is LocalUserData &&
         other.id == id &&
         other.email == email &&
-        other.money == money &&
-        other.gender == gender &&
-        other.birthday == birthday;
+        other.password == password &&
+        other.name == name &&
+        other.roleType == roleType;
   }
 }

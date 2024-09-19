@@ -11,16 +11,10 @@ abstract class OrderEvent extends BaseBlocEvent {
 
 @freezed
 class OrderPageInitiated extends OrderEvent with _$OrderPageInitiated {
-  const factory OrderPageInitiated(List<MItemCategories> lItemCategoriesOder) = _OrderPageInitiated;
+  const factory OrderPageInitiated(List<Menu> lItemMenuOder) = _OrderPageInitiated;
 }
 
 @freezed
 class OrderPagePostOrder extends OrderEvent with _$OrderPagePostOrder {
-  const factory OrderPagePostOrder(Map<int, int> item,List<MItemCategories> lItemCategoriesOder,int tableId) = _OrderPagePostOrder;
+  const factory OrderPagePostOrder(Map<int, int> item,List<Menu> lItemMenuOder,int tableId,int payType) = _OrderPagePostOrder;
 }
-
-@freezed
-class OrderPagePostPay extends OrderEvent with _$OrderPagePostPay {
-  const factory OrderPagePostPay(Map<int, int> item,List<MItemCategories> lItemCategoriesOder,int tableId,bool isMomo) = _OrderPagePostPay;
-}
-
