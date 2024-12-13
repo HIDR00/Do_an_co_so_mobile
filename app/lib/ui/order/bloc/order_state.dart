@@ -16,5 +16,6 @@ class OrderState extends BaseBlocState with _$OrderState {
     @Default(<Menu>[]) List<Menu> lDesserts,
     @Default(<Menu>[]) List<Menu> lDrinks,
     @Default(<int, int>{}) Map<int, int> item,
+    @Default(ListDevice()) ListDevice listDevice,
   }) = _OrderState;
 }

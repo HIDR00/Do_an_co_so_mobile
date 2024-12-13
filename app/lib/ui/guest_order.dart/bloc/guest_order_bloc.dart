@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../app.dart';
-import 'guest_order.dart';
 
 @Injectable()
 class GuestOrderBloc extends BaseBloc<GuestOrderEvent, GuestOrderState> {
@@ -26,8 +25,8 @@ class GuestOrderBloc extends BaseBloc<GuestOrderEvent, GuestOrderState> {
       GuestOrderPageInitiated event, Emitter<GuestOrderState> emit) async {
     return runBlocCatching(
       action: () async {
-        final _output = await _repository.getOderGuest(event.tableId);
-        emit(state.copyWith(loder: _output));
+        final output = await _repository.getOderGuest(event.tableId);
+        emit(state.copyWith(loder: output));
       },
       doOnSubscribe: () async {},
       doOnEventCompleted: () async {},
@@ -37,9 +36,20 @@ class GuestOrderBloc extends BaseBloc<GuestOrderEvent, GuestOrderState> {
   FutureOr<void> _onGuestOrderPageFreeTable(
       GuestOrderPageFreeTable event, Emitter<GuestOrderState> emit) async {
     return runBlocCatching(
-      action: () async {
-        await _repository.deleteUser(event.tableId);
-        emit(state.copyWith(isShimmerLoading: true));
+      action: () async { 
+        double totalPrice = 0;
+        for(var i in state.loder.orders){
+          totalPrice+=i.quantity*i.menu.price;
+        }
+        if(state.status < 3){
+          await _repository.updateTableStatus(event.tableId,state.status+1);
+          await _repository.postEmployeeHandleOrder(EmployeeHandleOrder(userId: _repository.getUserPreference().id,tableStatus: state.status,tableId: event.tableId,totalPrice: totalPrice));
+        }else{
+          await _repository.deleteUser(event.tableId);
+          await _repository.postEmployeeHandleOrder(EmployeeHandleOrder(userId: _repository.getUserPreference().id,tableStatus: 3,tableId: event.tableId,totalPrice: totalPrice));
+          await navigator.pop();
+        }
+        emit(state.copyWith(isShimmerLoading: true,status: state.status+1));
       },
       doOnSubscribe: () async {},
       doOnEventCompleted: () async {},

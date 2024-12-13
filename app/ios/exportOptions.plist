@@ -3,13 +3,13 @@
  <plist version=”1.0">
  <dict>
  <key>method</key>
- <string>development</string>
+ <string>app-store</string>
  <key>teamID</key>
- <string>{10-DIGIT TEAM ID}</string>
+ <string>838H98FR7Y</string>
  <key>provisioningProfiles</key>
  <dict>
- <key>{com.example.app}</key>
- <string>{Provisioning Profile Name}</string>
+ <key>phx.smartschool.phenikaauniversity</key>
+ <string>Phenikaa University Dist</string>
  </dict>
  </dict>
  </plist>

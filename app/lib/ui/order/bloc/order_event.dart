@@ -16,5 +16,5 @@ class OrderPageInitiated extends OrderEvent with _$OrderPageInitiated {
 
 @freezed
 class OrderPagePostOrder extends OrderEvent with _$OrderPagePostOrder {
-  const factory OrderPagePostOrder(Map<int, int> item,List<Menu> lItemMenuOder,int tableId,int payType) = _OrderPagePostOrder;
+  const factory OrderPagePostOrder(Map<int, int> item,List<Menu> lItemMenuOder,int tableId) = _OrderPagePostOrder;
 }

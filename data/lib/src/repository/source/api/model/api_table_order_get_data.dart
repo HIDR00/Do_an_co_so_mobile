@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'api_order_data.dart';
 import 'api_order_get_data.dart';
 
 part 'api_table_order_get_data.freezed.dart';

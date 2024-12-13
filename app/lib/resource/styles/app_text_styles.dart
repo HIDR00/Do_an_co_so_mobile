@@ -19,11 +19,12 @@ class AppTextStyles {
   static TextStyle s14w400Primary({
     double? tablet,
     double? ultraTablet,
+    Color? color
   }) =>
       _baseTextStyle.merge(TextStyle(
         fontSize: Dimens.d14.responsive(tablet: tablet, ultraTablet: ultraTablet),
         fontWeight: FontWeight.w400,
-        color: AppColors.current.primaryTextColor,
+        color: color ?? AppColors.current.primaryTextColor,
       ));
 
   static TextStyle s14w400Secondary({
@@ -100,20 +101,22 @@ class AppTextStyles {
   static TextStyle s20w700Title2({
     double? tablet,
     double? ultraTablet,
+    Color? color
   }) =>
       _baseTextStyle.merge(TextStyle(
         fontSize: Dimens.d20.responsive(tablet: tablet, ultraTablet: ultraTablet),
         fontWeight: FontWeight.w700,
-        color: AppColors.current.primaryTextColor,
+        color: color ?? AppColors.current.primaryTextColor,
       ));
 
   static TextStyle s18w700Title2({
     double? tablet,
     double? ultraTablet,
+    Color? color
   }) =>
       _baseTextStyle.merge(TextStyle(
         fontSize: Dimens.d18.responsive(tablet: tablet, ultraTablet: ultraTablet),
         fontWeight: FontWeight.w700,
-        color: AppColors.current.neutral1,
+        color: color ?? AppColors.current.neutral1,
       ));
 }

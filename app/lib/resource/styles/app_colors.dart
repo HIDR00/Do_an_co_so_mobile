@@ -17,6 +17,7 @@ class AppColors {
     required this.baseColors4,
     required this.neutral1,
     required this.neutral2,
+    required this.neutral3,
     required this.bgTable
   });
 
@@ -34,6 +35,7 @@ class AppColors {
 
   final Color neutral1;
   final Color neutral2;
+  final Color neutral3;
 
   final Color borderTable;
   final Color bgTable;
@@ -58,6 +60,7 @@ class AppColors {
 
     neutral1: Color(0xFF272727),
     neutral2: Color(0xFFF6F2ED),
+    neutral3: Color.fromARGB(255, 211, 210, 209),
 
     borderTable: Color.fromARGB(255, 112, 163, 215),
     bgTable: Color(0xFFebf5ff),
@@ -77,6 +80,7 @@ class AppColors {
 
     neutral1: Color(0xFF2E2A27),
     neutral2: Color(0xFF989898),
+    neutral3: Color.fromARGB(255, 194, 193, 192),
 
     borderTable: Color.fromARGB(255, 112, 163, 215),
     bgTable: Color(0xFFebf5ff),

@@ -16,6 +16,9 @@ class DioBuilder {
         receiveTimeout: options?.receiveTimeout ?? ServerTimeoutConstants.receiveTimeout,
         sendTimeout: options?.sendTimeout ?? ServerTimeoutConstants.sendTimeout,
         baseUrl: options?.baseUrl ?? UrlConstants.appApiBaseUrl,
+        followRedirects: options?.followRedirects,
+        maxRedirects: options?.maxRedirects,
+        validateStatus: options?.validateStatus
       ),
     );
 

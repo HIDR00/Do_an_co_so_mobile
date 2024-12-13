@@ -16,6 +16,7 @@ class ApiMenuDataMapper extends BaseDataMapper<ApiMenuData, Menu> {
       price: data?.price ?? Menu.defaultPrice,
       imageUrl: data?.imageUrl ?? Menu.defaultImageUrl,
       categoriesId: data?.categoriesId ?? Menu.defaultCategoriesId,
+      discription: data?.discription ?? Menu.defaultDiscription,
     );
   }
 }

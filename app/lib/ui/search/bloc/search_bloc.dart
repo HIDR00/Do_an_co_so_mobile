@@ -19,8 +19,8 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
   final Repository _repository;
   FutureOr<void> _onSearchPageInitiated(SearchPageInitiated event, Emitter<SearchState> emit) {
     return runBlocCatching(action: () async {
-      final _result = await _repository.getTables();
-      emit(state.copyWith(lTable: _result.lMTable));
+      final result = await _repository.getTables();
+      emit(state.copyWith(lTable: result.lMTable));
     },);
   }
 }

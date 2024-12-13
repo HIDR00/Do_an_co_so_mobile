@@ -11,6 +11,7 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
     this.onTap,
     this.keyboardType = TextInputType.text,
+    this.obscureText = false,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class AppTextField extends StatelessWidget {
   final VoidCallback? onTap;
   final TextInputType keyboardType;
   final TextEditingController? controller;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class AppTextField extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5), // Màu bóng và độ trong suốt
                 spreadRadius: 1, // Độ rộng của vùng bóng đổ xung quanh
                 blurRadius: 3, // Độ mờ của bóng đổ
-                offset: Offset(0, 2), // Thay đổi vị trí bóng đổ
+                offset: const Offset(0, 2), // Thay đổi vị trí bóng đổ
               ),
             ],
           ),
@@ -58,7 +60,7 @@ class AppTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25.0),
               ),
             ),
-            keyboardType: keyboardType,
+            obscureText: obscureText,
           ),
         ),
       ],

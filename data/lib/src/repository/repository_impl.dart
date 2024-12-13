@@ -20,7 +20,10 @@ class RepositoryImpl implements Repository {
     this._apiListCategoriesDataMapper,
     this._apiListMenuDataMapper,
     this._apiTableOrderDataMapper,
-    this._apiTableOrderGetDataMapper
+    this._apiTableOrderGetDataMapper,
+    this._apiDeviceDataMapper,
+    this._apiListDevicesDataMapper,
+    this._apiEmployeeHandleOrderDataMapper
   );
 
   final AppApiService _appApiService;
@@ -36,6 +39,9 @@ class RepositoryImpl implements Repository {
   final ApiListMenuDataMapper _apiListMenuDataMapper;
   final ApiTableOrderDataMapper _apiTableOrderDataMapper;
   final ApiTableOrderGetDataMapper _apiTableOrderGetDataMapper;
+  final ApiDeviceDataMapper _apiDeviceDataMapper;
+  final ApiListDevicesDataMapper _apiListDevicesDataMapper;
+  final ApiEmployeeHandleOrderDataMapper _apiEmployeeHandleOrderDataMapper;
 
   @override
   bool get isLoggedIn => _appPreferences.isLoggedIn;
@@ -86,7 +92,7 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<void> logout() async {
-    await _appApiService.logout();
+    // await _appApiService.logout();
     await _appPreferences.clearCurrentUserData();
   }
 
@@ -214,7 +220,12 @@ class RepositoryImpl implements Repository {
   Future<User> postUser(String email,String password) async {
     final response = await _appApiService.postUser(email,password);
     if(response!.userData!.name.isNotNullOrEmpty){
-      await _appPreferences.saveAccessToken(response!.userData!.name ?? '');
+      await _appPreferences.saveAccessToken(response.accessToken ?? '');
+      await saveUserPreference(
+        User(
+          id: response.userData?.id ?? 0
+        ),
+      );
     }
     return _userDataMapper.mapToEntity(response.userData);
   }
@@ -234,5 +245,38 @@ class RepositoryImpl implements Repository {
   @override
   Future<void> deleteUser(int tableId) async {
     await _appApiService.deleteUser(tableId);
+  }
+
+  @override
+  Future<void> updateTableStatus(int tableId,int status) async {
+    await _appApiService.updateTableStatus(tableId,status);
+  }
+
+  @override
+  Future<Device> createDevicesToken(String devicesToken) async {
+    final response = await _appApiService.postDeviceToken(devicesToken);
+    return _apiDeviceDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<ListDevice> getDevices() async {
+    final response = await _appApiService.getDevices();
+    return _apiListDevicesDataMapper.mapToEntity(response);
+  }
+
+  @override
+  Future<void> postNoti(String token, int tableId) async {
+    await _appApiService.postNoti(token,tableId);
+  }
+
+  @override
+  Future<String?> postPayment(int amount) async {
+    final _response = await _appApiService.postPayment(amount);
+    return _response?.value('location');
+  }
+
+  @override
+  Future<void> postEmployeeHandleOrder(EmployeeHandleOrder employeeHandleOrder) async {
+    await _appApiService.postEmployeeHandleOrder(_apiEmployeeHandleOrderDataMapper.mapToData(employeeHandleOrder));
   }
 }

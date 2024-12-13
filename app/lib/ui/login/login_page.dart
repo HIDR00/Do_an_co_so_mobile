@@ -23,13 +23,14 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
     return CommonScaffold(
       hideKeyboardWhenTouchOutside: true,
       appBar: CommonAppBar(
-        leadingIcon: navigator.canPopSelfOrChildren ? LeadingIcon.close : LeadingIcon.none,
-        leadingIconColor: AppColors.current.secondaryColor,
+        leadingIcon: LeadingIcon.close,
+        leadingIconColor: AppColors.primaryBG,
+        onLeadingPressed: () => navigator.pop(),
         titleType: AppBarTitle.text,
         centerTitle: true,
         text: S.current.login,
-        backgroundColor: AppColors.current.primaryColor,
-        titleTextStyle: AppTextStyles.s20w700Title2(),
+        backgroundColor: AppColors.current.baseColors3,
+        titleTextStyle: AppTextStyles.s20w700Title2(color: AppColors.primaryBG),
       ),
       body: 
         SafeArea(
@@ -71,6 +72,7 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                     hintText: S.current.password,
                     onChanged: (pass) => bloc.add(PasswordTextFieldChanged(password: pass)),
                     keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
                   ),
                   SizedBox(height: Dimens.d15.responsive()),
                   BlocBuilder<LoginBloc, LoginState>(

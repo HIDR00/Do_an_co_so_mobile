@@ -74,20 +74,20 @@ class CommonPagingScrollSnapPhysics extends ScrollPhysics {
   /// maxWidth if axis is horizontal
   /// maxHeight if axis is vertical
   double _getPadding() {
-    double _padding = 0;
+    double padding = 0;
     switch (selectedAnchorItem) {
       case SelectedAnchorItem.start:
-        _padding = 0;
+        padding = 0;
         break;
       case SelectedAnchorItem.middle:
-        _padding = ((isHorizontal ? maxWidth : maxHeight) - itemSize) / 2;
+        padding = ((isHorizontal ? maxWidth : maxHeight) - itemSize) / 2;
         break;
       case SelectedAnchorItem.end:
-        _padding = (isHorizontal ? maxWidth : maxHeight) - itemSize;
+        padding = (isHorizontal ? maxWidth : maxHeight) - itemSize;
         break;
     }
 
-    return _padding;
+    return padding;
   }
 
   /// Get pixels to scroll to target position

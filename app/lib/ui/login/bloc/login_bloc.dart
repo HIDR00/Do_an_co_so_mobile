@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 import 'login.dart';
 
 @Injectable()
 class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
-  LoginBloc(this._repository) : super(const LoginState()) {
+  LoginBloc(this._repository, this._saveDeviceTokenUseCase) : super(const LoginState()) {
     on<EmailTextFieldChanged>(
       _onEmailTextFieldChanged,
       transformer: distinct(),
@@ -27,6 +28,7 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
   }
 
   final Repository _repository;
+  final SaveDeviceTokenUseCase _saveDeviceTokenUseCase;
 
   bool _isLoginButtonEnabled(String email, String password) {
     return email.isNotEmpty && password.isNotEmpty;
@@ -51,10 +53,10 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
   FutureOr<void> _onLoginButtonPressed(LoginButtonPressed event, Emitter<LoginState> emit) {
     return runBlocCatching(
       action: () async {
-        final _output = await _repository.postUser(state.email,state.password);
-        if(_output.email.isNotEmpty){
-          // String? token = await FirebaseMessagingUtil.getToken();
-          // _appApiService.postDeviceToken(token ?? '');
+        final output = await _repository.postUser(state.email,state.password);
+        if(output.email.isNotEmpty){
+          String? token = await FirebaseMessagingUtil.getToken();
+          _saveDeviceTokenUseCase.execute(SaveDeviceTokenInput(deviceToken: token ?? ''));
           await navigator.replace(const AppRouteInfo.search());
         }else{
           navigator.showErrorSnackBar('Đăng nhập thất bại');

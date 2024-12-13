@@ -17,6 +17,7 @@ class ApiMenuData with _$ApiMenuData {
 		@JsonKey(name: 'price') int? price,
 		@JsonKey(name: 'image_url') String? imageUrl,
 		@JsonKey(name: 'categories_id') int? categoriesId,
+    @JsonKey(name: 'discription') String? discription,
 	}) = _ApiMenuData;
 
 	factory ApiMenuData.fromJson(Map<String, dynamic> json) => _$ApiMenuDataFromJson(json);

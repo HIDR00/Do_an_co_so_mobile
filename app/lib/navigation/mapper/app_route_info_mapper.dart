@@ -17,6 +17,8 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       myPage: () => const MyPageRoute(),
       search: () => const SearchRoute(),
       guestOder: (tableId) =>  GuestOrderRoute(tableId: tableId),
+      qrPaymen: (amount) => QrPaymentRoute(amount: amount),
+      menuDetail: (menu) => MenuDetailRoute(menu: menu),
     );
   }
 }

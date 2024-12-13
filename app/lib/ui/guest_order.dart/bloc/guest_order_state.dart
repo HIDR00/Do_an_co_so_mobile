@@ -9,6 +9,7 @@ part 'guest_order_state.freezed.dart';
 class GuestOrderState extends BaseBlocState with _$GuestOrderState {
   factory GuestOrderState({
     @Default(false) bool isShimmerLoading,
-    @Default(TableOrderGet()) TableOrderGet loder
+    @Default(TableOrderGet()) TableOrderGet loder,
+    @Default(1) int status
   }) = _GuestOrderState;
 }

@@ -15,4 +15,6 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.myPage() = _MyPagePage;
   const factory AppRouteInfo.search() = _SearchPage;
   const factory AppRouteInfo.guestOder(int tableId) = _GuestOrderPage;
+  const factory AppRouteInfo.qrPaymen(int amount) = _QrPaymentPage;
+  const factory AppRouteInfo.menuDetail(Menu menu) = _MenuDetailPage;
 }

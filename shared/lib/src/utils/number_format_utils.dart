@@ -9,6 +9,14 @@ class NumberFormatUtils {
     return NumberFormat.currency(symbol: SymbolConstants.yen, decimalDigits: 0).format(price);
   }
 
+  static String formatVND(double price) {
+  return NumberFormat.currency(
+    symbol: SymbolConstants.vnd,
+    locale: 'vi_VN',  
+    decimalDigits: 0  
+  ).format(price);
+}
+
   static String formatNumber(int number) {
     return NumberFormat(NumberFormatConstants.defaultFormat).format(number);
   }

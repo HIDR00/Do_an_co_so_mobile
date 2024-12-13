@@ -86,6 +86,7 @@ class _MenuPageState extends BasePageState<MenuPage, MenuBloc> {
                       state.lCategories.length,
                       (index) => CategoriesWidget(
                         lItem: getListMenu(state.lMenu, state.lCategories[index].id),
+                        onTap: (menu) => navigator.push(AppRouteInfo.menuDetail(menu)),
                         onAddToCart: (menu) {
                           if (state.lMenuOder.contains(menu)) {
                           } else {

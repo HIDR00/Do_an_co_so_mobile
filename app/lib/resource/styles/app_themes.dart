@@ -35,5 +35,5 @@ extension ThemeDataExtensions on ThemeData {
 
 class AppThemeSetting {
   const AppThemeSetting._();
-  static late AppThemeType currentAppThemeType = AppThemeType.light;
+  static AppThemeType currentAppThemeType = AppThemeType.light;
 }

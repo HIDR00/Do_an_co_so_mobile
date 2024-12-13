@@ -84,4 +84,16 @@ abstract class Repository {
   Future<TableOrder> postTableOrder(int tableId,TableOrder tableOrder);
 
   Future<void> deleteUser(int tableId);
+
+  Future<void> updateTableStatus(int tableId,int status);
+
+  Future<Device> createDevicesToken(String devicesToken);
+
+  Future<ListDevice> getDevices();
+
+  Future<void> postNoti(String token, int tableId);
+
+  Future<String?> postPayment(int amount);
+
+  Future<void> postEmployeeHandleOrder(EmployeeHandleOrder employeeHandleOrder);
 }

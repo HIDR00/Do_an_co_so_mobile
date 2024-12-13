@@ -24,7 +24,6 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
   late Map<int, int> item;
-  String? dropdownValue = 'Chuyển khoản';
 
   @override
   void initState() {
@@ -35,10 +34,10 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
 
   double calculateTotal() {
     double total = 0.0;
-    widget.lMenuOder.forEach((itemCategory) {
+    for (var itemCategory in widget.lMenuOder) {
       int quantity = item[itemCategory.id] ?? 0;
       total += itemCategory.price * quantity;
-    });
+    }
     return total;
   }
 
@@ -67,8 +66,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
               decoration: const BoxDecoration(
                 color: AppColors.primaryBG,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: ListView(
                 children: [
                   SingleChildScrollView(
                     child: Column(
@@ -116,30 +114,25 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
     return GestureDetector(
       onTap: () {
         bloc.add(
-            OrderPagePostOrder(item, widget.lMenuOder, widget.tableId, dropdownValue == 'Chuyển khoản' ? 1 : 0));
+            OrderPagePostOrder(item, widget.lMenuOder, widget.tableId));
       },
       child: Container(
         height: Dimens.d50,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: dropdownValue == 'Chuyển khoản' ? AppColors.current.baseColors4 : null,
+            color: AppColors.current.baseColors4,
             borderRadius: BorderRadius.circular(Dimens.d10),
             border: Border.all(color: AppColors.current.baseColors4)),
         child: Center(
-            child: Text(dropdownValue == 'Chuyển khoản' ? 'Pay' : 'Oder',
+            child: Text('Order',
                 style: AppTextStyles.s20w700Title2()
-                    .copyWith(color: dropdownValue == 'Chuyển khoản' ? Colors.white : AppColors.current.baseColors4))),
+                    .copyWith(color:Colors.white ))),
       ),
     );
   }
 
   Widget _renderPayment() {
     return SizedBox(
-      // decoration: BoxDecoration(
-      //   border: Border(
-      //     top: BorderSide(color: AppColors.current.baseColors2, width: 0.5),
-      //   ),
-      // ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -147,7 +140,7 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Payment Method',
+                'Total',
                 style: AppTextStyles.s18w700Title2(),
               ),
               Text(
@@ -155,26 +148,6 @@ class _OrderPageState extends BasePageState<OrderPage, OrderBloc> {
                 style: AppTextStyles.s18w700Title2(),
               ),
             ],
-          ),
-          DropdownButton<String>(
-            value: dropdownValue,
-            icon: const Icon(Icons.arrow_drop_down_outlined),
-            iconSize: 24,
-            elevation: 16,
-            style: AppTextStyles.s12w400Description(),
-            onChanged: (String? newValue) {
-              setState(() {
-                if (newValue != null) {
-                  dropdownValue = newValue;
-                }
-              });
-            },
-            items: <String>['Chuyển khoản', 'Thanh toán bằng tiền mặt'].map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
           ),
         ],
       ),

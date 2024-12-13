@@ -80,7 +80,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: bottom,
       shadowColor: shadowColor,
       shape: shape,
-      backgroundColor: AppColors.primaryBG,
+      backgroundColor: backgroundColor ?? AppColors.primaryBG,
       foregroundColor: foregroundColor,
       iconTheme: iconTheme,
       actionsIconTheme: actionsIconTheme,

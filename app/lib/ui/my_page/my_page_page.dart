@@ -21,6 +21,7 @@ class _MyPagePageState extends BasePageState<MyPagePage, MyPageBloc> {
   @override
   Widget buildPage(BuildContext context) {
     return CommonScaffold(
+      backgroundColor: AppColors.current.neutral2,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -31,9 +32,9 @@ class _MyPagePageState extends BasePageState<MyPagePage, MyPageBloc> {
                   return SwitchListTile.adaptive(
                     title: Text(
                       S.current.darkTheme,
-                      style: AppTextStyles.s14w400Primary(),
+                      style: AppTextStyles.s14w400Primary(color:AppColors.primaryBG),
                     ),
-                    tileColor: AppColors.current.primaryColor,
+                    tileColor: AppColors.current.baseColors3,
                     value: state.isDarkTheme,
                     onChanged: (isDarkTheme) => appBloc.add(
                       AppThemeChanged(isDarkTheme: isDarkTheme),
@@ -47,9 +48,9 @@ class _MyPagePageState extends BasePageState<MyPagePage, MyPageBloc> {
                   return SwitchListTile.adaptive(
                     title: Text(
                       S.current.japanese,
-                      style: AppTextStyles.s14w400Primary(),
+                      style: AppTextStyles.s14w400Primary(color: AppColors.primaryBG),
                     ),
-                    tileColor: AppColors.current.primaryColor,
+                    tileColor: AppColors.current.baseColors3,
                     value: state.languageCode == LanguageCode.ja,
                     onChanged: (isJa) => appBloc.add(
                       AppLanguageChanged(languageCode: isJa ? LanguageCode.ja : LanguageCode.en),
@@ -61,11 +62,13 @@ class _MyPagePageState extends BasePageState<MyPagePage, MyPageBloc> {
               ElevatedButton(
                 onPressed: () => bloc.add(const LogoutButtonPressed()),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(AppColors.current.primaryColor),
+                  backgroundColor: MaterialStateProperty.all(AppColors.current.baseColors3),
                 ),
                 child: Text(
                   S.current.logout,
-                  style: AppTextStyles.s14w400Primary(),
+                  style: AppTextStyles.s14w400Primary(
+                    color: AppColors.primaryBG
+                  ),
                 ),
               ),
             ],

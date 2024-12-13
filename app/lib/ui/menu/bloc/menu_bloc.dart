@@ -24,9 +24,9 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
   FutureOr<void> _onMenuPageInitiated(MenuPageInitiated event, Emitter<MenuState> emit) async {
     return runBlocCatching(
       action: () async {
-        final _result = await _repository.getCategory();
-        final _lMenu = await _repository.getItemMenu();
-        emit(state.copyWith(isShimmerLoading: true,lCategories: _result.data,lMenu: _lMenu));
+        final result = await _repository.getCategory();
+        final lMenu = await _repository.getItemMenu();
+        emit(state.copyWith(isShimmerLoading: true,lCategories: result.data,lMenu: lMenu));
     },
     doOnSubscribe: () async {
       
@@ -40,9 +40,8 @@ class MenuBloc extends BaseBloc<MenuEvent, MenuState> {
   FutureOr<void> _onTabViewAddOrder(TabViewAddOrder event, Emitter<MenuState> emit) async {
     return runBlocCatching(
       action: () async {
-        final _result = List<Menu>.from(state.lMenuOder);
-        _result.add(event.menu);
-        emit(state.copyWith(lMenuOder: _result));
+        final result = List<Menu>.from(state.lMenuOder)..add(event.menu);
+        emit(state.copyWith(lMenuOder: result));
     },
     doOnSubscribe: () async {
       

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:resources/resources.dart';
 import 'package:shared/shared.dart';
 
 enum InitialAppRoute {
@@ -48,7 +47,7 @@ enum NotificationType {
 }
 
 enum BottomTab {
-  home(icon: Icon(Icons.home), activeIcon: Icon(Icons.home)),
+  home(icon: Icon(Icons.menu), activeIcon: Icon(Icons.menu,)),
   search(icon: Icon(Icons.people), activeIcon: Icon(Icons.people)),
   myPage(icon: Icon(Icons.settings), activeIcon: Icon(Icons.settings));
 
@@ -62,9 +61,9 @@ enum BottomTab {
   String get title {
     switch (this) {
       case BottomTab.home:
-        return 'Oder';
+        return 'Nhà hàng';
       case BottomTab.search:
-        return 'Management.';
+        return 'Nhân Viên';
       case BottomTab.myPage:
         return 'setting';
     }

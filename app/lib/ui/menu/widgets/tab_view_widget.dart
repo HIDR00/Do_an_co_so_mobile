@@ -2,15 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared/shared.dart';
 
 import '../../../app.dart';
 import '../bloc/menu.dart';
 
 // ignore: must_be_immutable
 class CategoriesWidget extends StatefulWidget {
-  CategoriesWidget({required this.lItem, this.onAddToCart, super.key});
+  CategoriesWidget({required this.onTap,required this.lItem, this.onAddToCart, super.key});
   final List<Menu> lItem;
   void Function(Menu)? onAddToCart;
+  void Function(Menu)? onTap;
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();
@@ -55,13 +57,16 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(Dimens.d10),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.lItem[index].imageUrl,
-                      height: Dimens.d120,
-                      fit: BoxFit.fill,
-                    )),
+                GestureDetector(
+                  onTap:() => widget.onTap!(widget.lItem[index]),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(Dimens.d10),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.lItem[index].imageUrl,
+                        height: Dimens.d120,
+                        fit: BoxFit.fill,
+                      )),
+                ),
                 const SizedBox(height: Dimens.d10),
                 Text(
                   widget.lItem[index].name,
@@ -98,8 +103,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   Text _renderPrice(MenuState state, int index) {
     return Text(
-      '${widget.lItem[index].price.toString()}đ',
-      style: AppTextStyles.s14w400Description(),
+      NumberFormatUtils.formatVND(widget.lItem[index].price*1.0),
+      style: AppTextStyles.s12w400Description(),
     );
   }
 }

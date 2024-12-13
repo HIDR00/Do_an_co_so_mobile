@@ -13,6 +13,7 @@ class Menu with _$Menu {
     @Default(Menu.defaultPrice) int price,
     @Default(Menu.defaultImageUrl) String imageUrl,
     @Default(Menu.defaultCategoriesId) int categoriesId,
+    @Default(Menu.defaultDiscription) String discription
   }) = _Menu;
 
   static const defaultId = 0;
@@ -23,4 +24,5 @@ class Menu with _$Menu {
   static const defaultPrice = 0;
   static const defaultImageUrl = '';
   static const defaultCategoriesId = 0;
+  static const defaultDiscription = '';
 }

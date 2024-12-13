@@ -43,7 +43,6 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
           return MaterialApp.router(
             builder: (context, child) {
               final MediaQueryData data = MediaQuery.of(context);
-
               return MediaQuery(
                 data: data.copyWith(textScaleFactor: 1.0),
                 child: child ?? const SizedBox.shrink(),

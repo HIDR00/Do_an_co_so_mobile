@@ -30,14 +30,21 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   FutureOr<void> _onHomePageInitiated(HomePageInitiated event, Emitter<HomeState> emit) async {
     return runBlocCatching(
       action: () async {
-        final _result = await _repository.getTables();
-        emit(state.copyWith(isShimmerLoading: true,lTable: _result.lMTable));
+        final result = await _repository.getTables();
+        final lMenu = await _repository.getItemMenu();
+        emit(state.copyWith(isShimmerLoading: true,lTable: result.lMTable,lMenu: lMenu));
+    },
+    doOnError: (p0) async {
+      print('toan2');
     },
     doOnSubscribe: () async {
       
     },
     doOnEventCompleted: () async {
       
+    },
+    doOnSuccessOrError: () async {
+      print('toan');
     },
     );
   }

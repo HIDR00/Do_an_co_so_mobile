@@ -20,6 +20,8 @@ class OrderBloc extends BaseBloc<OrderEvent, OrderState> {
     );
   }
   final Repository _repository;
+
+
   FutureOr<void> _onOrderPageInitiated(OrderPageInitiated event, Emitter<OrderState> emit) async {
     return runBlocCatching(
       action: () async {
@@ -36,6 +38,9 @@ class OrderBloc extends BaseBloc<OrderEvent, OrderState> {
           categoriesMap[menuItem.categoriesId]?.add(menuItem);
         }
 
+        final result = await _repository.getDevices();
+
+
         emit(state.copyWith(
           lAppetizers: categoriesMap[0]!,
           lMainCourse: categoriesMap[1]!,
@@ -43,7 +48,9 @@ class OrderBloc extends BaseBloc<OrderEvent, OrderState> {
           lFusionDishes: categoriesMap[3]!,
           lDesserts: categoriesMap[4]!,
           lDrinks: categoriesMap[5]!,
+          listDevice:  result,
         ));
+        
       },
       doOnSubscribe: () async {},
       doOnEventCompleted: () async {},
@@ -57,12 +64,21 @@ class OrderBloc extends BaseBloc<OrderEvent, OrderState> {
         for(int i = 0;i < event.lItemMenuOder.length;i++){
           lOder.add(MOrder(tableId: event.tableId,quantity: event.item[event.lItemMenuOder[i].id] ?? 1,menuId: event.lItemMenuOder[i].id));
         }
-        final tableOrder = TableOrder(payType: event.payType,status: 1,orders: lOder);
+        final tableOrder = TableOrder(status: 1,orders: lOder);
         await _repository.postTableOrder(event.tableId,tableOrder);
-        await navigator.replace(const AppRouteInfo.main());
+        for(var i in state.listDevice.data){
+          await _repository.postNoti(i.deviceToken,event.tableId);
+        }
       },
       doOnSubscribe: () async {},
-      doOnEventCompleted: () async {},
+      doOnEventCompleted: () async {
+        int total = 0;
+        for (var itemCategory in event.lItemMenuOder) {
+          int quantity = event.item[itemCategory.id] ?? 0;
+          total += itemCategory.price * quantity;
+        }
+        await navigator.replace(AppRouteInfo.qrPaymen(total));
+      },
     );
   }
 }

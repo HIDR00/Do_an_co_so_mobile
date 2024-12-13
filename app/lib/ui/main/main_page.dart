@@ -25,7 +25,6 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
       routes: (navigator as AppNavigatorImpl).tabRoutes,
       bottomNavigationBuilder: (_, tabsRouter) {
         (navigator as AppNavigatorImpl).tabsRouter = tabsRouter;
-
         return BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
             return BottomNavigationBar(
@@ -46,6 +45,8 @@ class _MainPageState extends BasePageState<MainPage, MainBloc> {
                   }
                 }
               },
+              selectedItemColor: AppColors.current.baseColors1,
+              unselectedItemColor: AppColors.current.baseColors2,
               showSelectedLabels: true,
               showUnselectedLabels: true,
               type: BottomNavigationBarType.fixed,
